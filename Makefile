@@ -5,12 +5,14 @@
 ## Login   <leandre.blanchard@epitech.eu>
 ## 
 ## Started on  Thu Dec 15 20:24:11 2016 Léandre Blanchard
-## Last update Wed Oct 25 22:01:41 2017 Léandre Blanchard
+## Last update Wed Oct 25 22:06:53 2017 Léandre Blanchard
 ##
 
 NAME	= remote-tty
 
 CC	= gcc
+
+MAKE	= make -C
 
 LIB	= -L./lib/C -lmy
 LIB	+= -lpthread
@@ -28,13 +30,16 @@ CFLAGS	+= -W -Werror -g3 -Wall -Wextra -I ./include
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C lib/C
+	$(MAKE) lib/C
 	$(CC) $(OBJ) -o $(NAME) $(CFLAGS) $(LIB)
+	@	tput setaf 2; cat include/signature; tput sgr0
 
 clean:
+	$(MAKE) lib/C clean
 	$(RM) $(OBJ)
 
 fclean: clean
+	$(MAKE) lib/C fclean
 	$(RM) $(NAME)
 
 re: fclean all

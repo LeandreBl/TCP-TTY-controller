@@ -5,7 +5,7 @@
 ** Login   <lblanchard@epitech.net>
 ** 
 ** Started on  Thu Oct 13 09:19:01 2016 Leandre Blanchard
-** Last update Tue Oct 24 21:39:52 2017 Léandre Blanchard
+** Last update Wed Oct 25 21:04:35 2017 Léandre Blanchard
 */
 
 #ifndef MY_H_
@@ -385,16 +385,16 @@ char	*my_strncat(char *dest, const char *src, int n);
 char	*my_strdup(const char *str);
 
 /* Reverse the order of the characters in str */
-char	*my_revstr(char *str);
+char	*revstr(char *str);
 
 /* Returns the size of a NULL terminated tab */
-int	my_tablen(char **tab);
+int	tablen(char **tab);
 
 /* Put a tab using \n for each lines */
-void	my_put_tab(char **tab);
+void	put_tab(char **tab);
 
 /* Puts each line of tab till NULL preceded by <start> and followed by <end> */
-void	my_put_tabw(const char *start,
+void	put_tabw(const char *start,
 		      char **tab,
 		      const char *end);
 
