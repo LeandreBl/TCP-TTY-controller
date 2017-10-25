@@ -52,7 +52,7 @@ void            put_number(int nb, sfVector2f pos,
     {
       str = int_char(nb);
       put_word(str, pos, window, color);
-      free(str);
+      sfree(&str);
     }
   else
     put_word("0", pos, window, sfRed);

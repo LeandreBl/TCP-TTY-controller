@@ -48,14 +48,14 @@ t_sprite		*create_sprite(const char *pathname)
   new_printf(BOLDRED);
   if ((sprite->texture = sfTexture_createFromFile(pathname, NULL)) == NULL)
     {
-      free(sprite);
+      sfree(&sprite);
       return (NULL);
     }
   new_printf(RESET);
   if ((sprite->sprite = sfSprite_create()) == NULL)
     {
       sfTexture_destroy(sprite->texture);
-      free(sprite);
+      sfree(&sprite);
       return (NULL);
     }
   sfSprite_setTexture(sprite->sprite, sprite->texture, sfTrue);

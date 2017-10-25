@@ -31,17 +31,37 @@ static void		info_session(session_info_t *session)
   mprintf("\n");
 }
 
+static int		get_old_conf(struct termios *old)
+{
+  mprintf("Saving terminal configs  : ");
+  if (tcgetattr(0, old) == -1)
+  {
+    mprintf("ERROR\n");
+    mdprintf(2, "Error : Could not save terminal configs\n");
+    return (-1);
+  }
+  mprintf("DONE\n");
+  return (0);
+}
+
 int			main(int ac, char **av)
 {
   session_info_t	session;
+  struct termios	old;
 
   if (start_session(&session, ac, av) == -1)
   {
     mdprintf(2, "Error : Unable to start the session\n");
     return (-1);
   }
+  if (get_old_conf(&old) == -1)
+    return (-1);
   info_session(&session);
-  if (end_session(&session) == -1)
+  if (start_communication(&session) == -1)
+  {
+    mdprintf(2, "Error : Communication error\n");
+  }
+  if (end_session(&session, &old) == -1)
   {
     mdprintf(2, "Error : Failed to end the session properly\n");
     return (-1);

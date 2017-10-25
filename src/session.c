@@ -75,9 +75,10 @@ int		start_session(session_info_t *session, int ac, char **av)
   return (0);
 }
 
-int		end_session(session_info_t *session)
+int		end_session(session_info_t *session, struct termios *old)
 {
   sfree(&session->username);
   sfree(&session->ip);
+  tcsetattr(0, TCSANOW, old);
   return (0);
 }

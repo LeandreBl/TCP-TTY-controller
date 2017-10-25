@@ -31,9 +31,9 @@ void		free_sprites_only(t_sprite **sprites)
 	{
 	  if (sprites[i]->sprite != NULL)
 	    sfSprite_destroy(sprites[i]->sprite);
-	  free(sprites[i++]);
+	  sfree(&sprites[i++]);
 	}
-      free(sprites);
+      sfree(&sprites);
     }
 }
 /*
@@ -52,7 +52,7 @@ void		free_sprites(t_sprite **sprites)
 	  free_sprite(sprites[i]);
 	  i++;
 	}
-      free(sprites);
+      sfree(&sprites);
     }
 }
 /*
@@ -71,7 +71,7 @@ void		free_musics(sfMusic **musics)
 	  sfMusic_destroy(musics[i]);
 	  i++;
 	}
-      free(musics);
+      sfree(&musics);
     }
 }
 /*
@@ -85,7 +85,7 @@ void            free_sprite(t_sprite *sprite)
 	sfSprite_destroy(sprite->sprite);
       if (sprite->texture != NULL)
 	sfTexture_destroy(sprite->texture);
-      free(sprite);
+      sfree(&sprite);
     }
 }
 /*
@@ -99,14 +99,14 @@ void            free_window(t_window *window)
       if (window->window != NULL)
 	sfRenderWindow_destroy(window->window);
       if (window->pixels != NULL)
-	free(window->pixels);
+	sfree(&window->pixels);
       if (window->font != NULL)
-	free(window->font);
+	sfree(&window->font);
       free_musics(window->musics);
       if (window->texture != NULL)
 	sfTexture_destroy(window->texture);
       if (window->sprite != NULL)
 	sfSprite_destroy(window->sprite);
-      free(window);
+      sfree(&window);
     }
 }

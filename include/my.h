@@ -21,6 +21,20 @@ extern "C" {
 # include <stddef.h>
 
 /*
+** Sets the correct ioctl config for get_cmd command
+** Return -1 o error
+*/
+int	routine_ioctl(void);
+
+/*
+** Runs a get_next_line shell like handle arrows
+** cmds in a tab of char * of previous cmds, it can be NULL
+** and so arrows up and down will navigate in it
+** return NULL if quit or on ERROR
+*/
+char	*get_cmd(char **cmds, const char *prompt);
+
+/*
 ** Returns the ip of the interface, if interface is NULL,
 ** returns the first valid ip it finds
 ** Return NULL on error

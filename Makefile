@@ -13,9 +13,11 @@ NAME	= remote-tty
 CC	= gcc
 
 LIB	= -L./lib/C -lmy
+LIB	+= -lpthread
 
-SRCS	= src/main.c \
-	  src/session.c
+SRCS	= src/main.c
+SRCS	+= src/session.c
+SRCS	+= src/start_communication.c
 
 OBJ	= $(SRCS:.c=.o)
 
