@@ -5,31 +5,28 @@
 ## Login   <leandre.blanchard@epitech.eu>
 ## 
 ## Started on  Thu Dec 15 20:24:11 2016 Léandre Blanchard
-## Last update Wed Oct 25 22:01:41 2017 Léandre Blanchard
+## Last update Mon Jul 24 21:48:02 2017 Léandre Blanchard
 ##
 
-NAME	= remote-tty
+NAME	= 
 
 CC	= gcc
 
 LIB	= -L./lib/C -lmy
-LIB	+= -lpthread
 
 SRCS	= src/main.c
-SRCS	+= src/session.c
-SRCS	+= src/start_communication.c
 
 OBJ	= $(SRCS:.c=.o)
 
 RM	= rm -f
 
-CFLAGS	+= -W -Werror -g3 -Wall -Wextra -I ./include
+CFLAGS	+= -W -Werror -g3 -Wall -Wextra -I ./include -O2
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C lib/C
 	$(CC) $(OBJ) -o $(NAME) $(CFLAGS) $(LIB)
+	@       tput setaf 2; cat include/signature; tput sgr0
 
 clean:
 	$(RM) $(OBJ)

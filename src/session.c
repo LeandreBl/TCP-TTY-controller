@@ -77,6 +77,7 @@ int		start_session(session_info_t *session, int ac, char **av)
 
 int		end_session(session_info_t *session, struct termios *old)
 {
+  mprintf("Ending session of : %s\n", session->username);
   sfree(&session->username);
   sfree(&session->ip);
   tcsetattr(0, TCSANOW, old);
