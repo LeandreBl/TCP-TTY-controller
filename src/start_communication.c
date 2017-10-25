@@ -10,9 +10,10 @@
 #include "my.h"
 #include "defines.h"
 
-static int	server_thread(session_info_t *session)
+static int	start_threads(session_info_t *session)
 {
-  session->com_thread = session->com_thread;
+  if (session->side == SERVER && start_server(session) == -1)
+    return (-1);
   return (0);
 }
 
@@ -23,7 +24,7 @@ int		start_communication(session_info_t *session)
 
   routine_ioctl();
   cmds = NULL;
-  server_thread(session);
+  start_threads(session);
   while ((line = get_cmd(cmds, " > ")) != NULL)
   {
     cmds = tab_append(cmds, line);

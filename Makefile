@@ -5,7 +5,7 @@
 ## Login   <leandre.blanchard@epitech.eu>
 ## 
 ## Started on  Thu Dec 15 20:24:11 2016 Léandre Blanchard
-## Last update Wed Oct 25 22:06:53 2017 Léandre Blanchard
+## Last update Wed Oct 25 23:11:54 2017 Léandre Blanchard
 ##
 
 NAME	= remote-tty
@@ -20,6 +20,8 @@ LIB	+= -lpthread
 SRCS	= src/main.c
 SRCS	+= src/session.c
 SRCS	+= src/start_communication.c
+SRCS	+= src/server.c
+SRCS	+= src/server_thread.c
 
 OBJ	= $(SRCS:.c=.o)
 
@@ -35,11 +37,11 @@ $(NAME): $(OBJ)
 	@	tput setaf 2; cat include/signature; tput sgr0
 
 clean:
-	$(MAKE) lib/C clean
+	@	$(MAKE) lib/C clean > /dev/null
 	$(RM) $(OBJ)
 
 fclean: clean
-	$(MAKE) lib/C fclean
+	@	$(MAKE) lib/C fclean > /dev/null
 	$(RM) $(NAME)
 
 re: fclean all

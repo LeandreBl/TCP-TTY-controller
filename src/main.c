@@ -33,14 +33,14 @@ static void		info_session(session_info_t *session)
 
 static int		get_old_conf(struct termios *old)
 {
-  mprintf("Saving terminal configs  : ");
+  mprintf("Saving terminal configs : ");
   if (tcgetattr(0, old) == -1)
   {
-    mprintf("ERROR\n");
+    mprintf("Error\n");
     mdprintf(2, "Error : Could not save terminal configs\n");
     return (-1);
   }
-  mprintf("DONE\n");
+  mprintf("Done\n");
   return (0);
 }
 
