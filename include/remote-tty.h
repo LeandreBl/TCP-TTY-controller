@@ -15,8 +15,6 @@
 # define SERVER		(1)
 # define CLIENT		(0)
 
-# define SERVER_PORT	(14344)
-
 # define USERNAME_FLAG	("-u")
 # define IP_FLAG	("-ip")
 # define SIDE_FLAG	("-set")
@@ -27,7 +25,7 @@
 # define ACCEPT_FAILED	(-1)
 # define COM_ERROR	(-2)
 
-# define CON_TIMEOUT	(5)
+# define CON_TIMEOUT	(2)
 
 # define NB_FCTION	(3)
 

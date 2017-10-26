@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 
 #include "remote-tty.h"
+#include "protocol.h"
 
 #include "my.h"
 #include "defines.h"

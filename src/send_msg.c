@@ -51,7 +51,7 @@ int		receive_msg(session_info_t *session, header_t *header)
     mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
     return (-1);
   }
-  mprintf("\r%s : %s\n > ", msg, msg + my_strlen(msg) + 1);
+  mprintf("\r %s : %s\n > ", msg, msg + my_strlen(msg) + 1);
   sfree(&msg);
   return (0);
 }

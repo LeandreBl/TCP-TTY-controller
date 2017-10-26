@@ -5,12 +5,12 @@
 ** server thread
 */
 
-#include <unistd.h>
 #include <pthread.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
 #include "remote-tty.h"
+#include "protocol.h"
 
 #include "my.h"
 #include "defines.h"
