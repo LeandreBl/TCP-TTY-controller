@@ -38,3 +38,13 @@ char				*add_str(char *src, va_list *va)
   str = va_arg(*va, char *);
   return (insert(src, str, my_strlen(src)));
 }
+
+char				*add_str_free(char *src, va_list *va)
+{
+  char				*str;
+
+  str = va_arg(*va, char *);
+  src = insert(src, str, my_strlen(src));
+  sfree(&str);
+  return (src);
+}

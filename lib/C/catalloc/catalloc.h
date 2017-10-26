@@ -16,7 +16,7 @@ struct	ptr_fction_s
   void	*(* fction)(char *src, va_list *va);
 };
 
-# define NB_FCTION (5)
+# define NB_FCTION (6)
 
 typedef struct ptr_fction_s ptr_fction_t;
 
@@ -26,6 +26,7 @@ char	*va_catalloc(const char *format, va_list *va);
 char	*add_char(char *src, va_list *va);
 char	*add_number(char *src, va_list *va);
 char	*add_str(char *src, va_list *va);
+char	*add_str_free(char *src, va_list *va);
 char	*add_float(char *src, va_list *va);
 char	*cata_free(char *src, va_list *va);
 

@@ -22,6 +22,7 @@ static void		tab_create(ptr_fction_t *tab)
   add_fction('d', &tab[2], (void *)add_number);
   add_fction('f', &tab[3], (void *)add_float);
   add_fction('F', &tab[4], (void *)cata_free);
+  add_fction('S', &tab[5], (void *)add_str_free);
 }
 
 char			*va_catalloc(const char *format, va_list *va)
