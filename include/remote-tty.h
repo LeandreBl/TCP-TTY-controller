@@ -17,7 +17,6 @@
 
 # define USERNAME_FLAG	("-u")
 # define IP_FLAG	("-ip")
-# define SIDE_FLAG	("-set")
 # define PORT_FLAG	("-p")
 
 # define MEM_ERROR	("Error : Not enough memory\n")
@@ -28,11 +27,12 @@
 
 # define CON_TIMEOUT	(2)
 
-# define NB_FCTION	(3)
-# define NB_CMDS        (1)
+# define NB_FCTION	(4)
+# define NB_CMDS        (2)
 
 struct		session_info_s
 {
+  char		*command;
   char		*color;
   char		*username;
   int		side;
@@ -81,9 +81,14 @@ int	receive_welcome(session_info_t *session, header_t *header);
 int	receive_msg(session_info_t *session, header_t *header);
 int	send_msg(session_info_t *session, int action, char *msg);
 int	receive_leave(session_info_t *session, header_t *header);
+int	receive_command(session_info_t *session, header_t *header);
 
 int	user_command(const char *cmd, session_info_t *session);
 int	cmd_quit(const char *cmd, session_info_t *session);
 int	change_color(const char *cmd, session_info_t *session);
+int	send_command_request(const char *cmd, session_info_t *session);
+
+int	encrypt(char *msg, int pktlen);
+int	unencrypt(char *msg, int pktlen);
 
 #endif /* !REMOTE_TTY_H_ */

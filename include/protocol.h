@@ -15,5 +15,6 @@
 # define WELCOME	(1)
 # define SIMPLE_MSG	(2)
 # define LEAVE		(3)
+# define RQ_COMMAND	(4)
 
 #endif /* !PROTOCOL_H_ */

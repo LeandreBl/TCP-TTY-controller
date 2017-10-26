@@ -26,6 +26,7 @@ static void		init_tab(rcv_ptr_tab_t tab[])
   add_fction(WELCOME, (void *)receive_welcome, &tab[0]);
   add_fction(SIMPLE_MSG, (void *)receive_msg, &tab[1]);
   add_fction(LEAVE, (void *)receive_leave, &tab[2]);
+  add_fction(RQ_COMMAND, (void *)receive_command, &tab[3]);
 }
 
 static int		get_header(session_info_t *session, header_t *header)

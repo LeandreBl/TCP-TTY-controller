@@ -25,6 +25,7 @@ int		receive_leave(session_info_t *session, header_t *header)
     mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
     return (-1);
   }
+  unencrypt(msg, header->pktlen);
   mprintf("\r -%s left the chat\n", msg);
   sfree(&msg);
   close(session->csocket);

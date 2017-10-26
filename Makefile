@@ -30,6 +30,8 @@ SRCS	+= src/send_msg.c
 SRCS	+= src/receive_leave.c
 SRCS	+= src/commands.c
 SRCS	+= src/change_color.c
+SRCS	+= src/encrypt.c
+SRCS	+= src/send_command.c
 
 OBJ	= $(SRCS:.c=.o)
 

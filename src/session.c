@@ -36,20 +36,13 @@ static int	change_ip(session_info_t *session, const char *arg)
     mdprintf(2, MEM_ERROR);
     return (-1);
   }
-  return (0);
-}
-
-static int	change_side(session_info_t *session, const char *arg)
-{
-  if (my_strcmp(arg, "server") == 0)
-    session->side = SERVER;
-  if (my_strcmp(arg, "client") == 0)
-    session->side = CLIENT;
+  session->side = CLIENT;
   return (0);
 }
 
 static void	set_session(session_info_t *session)
 {
+  session->command = NULL;
   session->username = NULL;
   session->side = SERVER;
   session->ip = NULL;
@@ -73,9 +66,6 @@ int		start_session(session_info_t *session, int ac, char **av)
 	return (-1);
     if (my_strcmp(av[i], IP_FLAG) == 0 && av[i + 1])
       if (change_ip(session, av[i + 1]) == -1)
-	return (-1);
-    if (my_strcmp(av[i], SIDE_FLAG) == 0 && av[i + 1])
-      if (change_side(session, av[i + 1]) == -1)
 	return (-1);
     if (my_strcmp(av[i], PORT_FLAG) == 0 && av[i + 1])
       if ((session->port = my_getnbr(av[i + 1])) <= 0)
