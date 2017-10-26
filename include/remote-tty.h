@@ -15,7 +15,7 @@
 # define SERVER		(1)
 # define CLIENT		(0)
 
-# define SERVER_PORT	(14443)
+# define SERVER_PORT	(14344)
 
 # define USERNAME_FLAG	("-u")
 # define IP_FLAG	("-ip")
@@ -29,7 +29,7 @@
 
 # define CON_TIMEOUT	(5)
 
-# define NB_FCTION	(2)
+# define NB_FCTION	(3)
 
 struct		session_info_s
 {
@@ -72,5 +72,6 @@ int	receive(session_info_t *session);
 int	receive_welcome(session_info_t *session, header_t *header);
 int	receive_msg(session_info_t *session, header_t *header);
 int	send_msg(session_info_t *session, int action, char *msg);
+int	receive_leave(session_info_t *session, header_t *header);
 
 #endif /* !REMOTE_TTY_H_ */

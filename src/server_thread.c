@@ -5,6 +5,7 @@
 ** server thread
 */
 
+#include <unistd.h>
 #include <pthread.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -20,7 +21,7 @@ static int		accept_new_client(session_info_t *session)
   struct sockaddr_in	csin;
 
   mprintf("\rWaiting for new client : ");
-  if (listen(session->socket, 5) == -1)
+  if (listen(session->socket, 1) == -1)
   {
     mdprintf(2, "Error : Could not listen on port %d\n", SERVER_PORT);
     return (-1);

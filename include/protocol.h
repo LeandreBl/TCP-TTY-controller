@@ -12,5 +12,6 @@
 
 # define WELCOME	(1)
 # define SIMPLE_MSG	(2)
+# define LEAVE		(3)
 
 #endif /* !PROTOCOL_H_ */

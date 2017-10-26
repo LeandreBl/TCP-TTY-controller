@@ -20,7 +20,7 @@ static void		send_thread(session_info_t *session)
   while (session->status == STATUS_OK)
   {
     if (session->csocket == -1 && session->side == CLIENT)
-      if (connect_client(session) == -1)
+      while (connect_client(session) == -1)
       {
 	mdprintf(2, "Re-try connection in %d sec ...\n", CON_TIMEOUT);
 	sleep(CON_TIMEOUT);

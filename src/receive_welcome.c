@@ -23,6 +23,6 @@ int		receive_welcome(session_info_t *session, header_t *header)
     session->status = COM_ERROR;
     return (-1);
   }
-  mprintf("%S joined the chat\n > ", name);
+  mprintf("\r%S joined the chat\n > ", name);
   return (0);
 }

@@ -46,12 +46,8 @@ static int		get_old_conf(struct termios *old)
   return (0);
 }
 
-static void		sigusr_handler(int sig)
+static void		sigusr_handler(__attribute__ ((unused)) int sig)
 {
-  if (sig == SIGUSR1)
-  {
-    mprintf("\rCanceling reads\n");
-  }
 }
 
 int			main(int ac, char **av)
@@ -69,9 +65,7 @@ int			main(int ac, char **av)
   signal(SIGUSR1, sigusr_handler);
   info_session(&session);
   if (start_communication(&session) == -1)
-  {
     mdprintf(2, "Error : Communication error\n");
-  }
   if (end_session(&session, &old) == -1)
   {
     mdprintf(2, "Error : Failed to end the session properly\n");

@@ -22,7 +22,7 @@ int		send_msg(session_info_t *session, int action, char *msg)
   magic = MAGIC_NUMBER;
   header.action = action;
   header.pktlen = my_strlen(msg) + my_strlen(session->username) + 1;
-  send = catalloc("%s %s", session->username, msg);
+  send = catalloc("%s-%s", session->username, msg);
   if (send == NULL)
     return (-1);
   send[my_strlen(session->username)] = 0;
@@ -43,7 +43,7 @@ int		receive_msg(session_info_t *session, header_t *header)
 {
   char		*msg;
 
-  msg = my_calloc(header->pktlen);
+  msg = my_calloc(header->pktlen + 1);
   if (msg == NULL)
     return (-1);
   if (read(session->csocket, msg, header->pktlen) == -1)
@@ -51,7 +51,7 @@ int		receive_msg(session_info_t *session, header_t *header)
     mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
     return (-1);
   }
-  mprintf("%s : %s\n > ", msg, msg + my_strlen(msg) + 1);
+  mprintf("\r%s : %s\n > ", msg, msg + my_strlen(msg) + 1);
   sfree(&msg);
   return (0);
 }

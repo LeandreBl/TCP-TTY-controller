@@ -40,6 +40,7 @@ int		start_communication(session_info_t *session)
       mprintf("Error : communication\n");
     cmds = tab_append(cmds, line);
   }
+  send_msg(session, LEAVE, NULL);
   free_tab(cmds);
   return (0);
 }

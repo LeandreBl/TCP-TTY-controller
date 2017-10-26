@@ -31,6 +31,7 @@ int			start_server(session_info_t *session)
   if (bind(session->socket, (struct sockaddr *)&sin,
 	   sizeof(struct sockaddr_in)) == -1)
   {
+    session->socket = -1;
     mdprintf(2, "Error : Could not bind sockaddr with server socket\n");
     return (-1);
   }

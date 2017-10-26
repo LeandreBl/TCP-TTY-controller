@@ -95,14 +95,15 @@ int		end_session(session_info_t *session, struct termios *old)
   }
   mprintf("Waiting for threads to end : ");
   kill(getpid(), SIGUSR1);
-  if (pthread_cancel(session->rthread) == -1 ||
-      pthread_cancel(session->sthread) == -1 ||
-      pthread_join(session->rthread, NULL) == -1 ||
-      pthread_join(session->sthread, NULL) == -1)
+  if (session->socket > 0 || session->csocket > 0)
+    if (pthread_cancel(session->rthread) == -1 ||
+	pthread_cancel(session->sthread) == -1 ||
+	pthread_join(session->rthread, NULL) == -1 ||
+	pthread_join(session->sthread, NULL) == -1)
     {
-    mdprintf(2, "Error : Could not cancel or stop the server thread\n");
-    return (-1);
-  }
+      mdprintf(2, "Error : Could not cancel or stop the server thread\n");
+      return (-1);
+    }
   mprintf("Done\n");
   return (0);
 }
