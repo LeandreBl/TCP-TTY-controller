@@ -17,7 +17,7 @@ int		zeros(char *ptr, int size)
   i = 0;
   if (ptr == NULL)
     return (-1);
-  while (i != size)
+  while (i < size)
     ptr[i++] = 0;
   return (0);
 }

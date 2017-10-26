@@ -49,6 +49,7 @@ static void		receive_thread(session_info_t *session)
     if (session->csocket == -1 && session->side == SERVER)
       if (accept_new_client(session) == -1)
 	session->status = ACCEPT_FAILED;
+    receive(session);
   }
 }
 

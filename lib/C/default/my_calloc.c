@@ -16,7 +16,10 @@ void		*my_calloc(size_t size)
 {
   void		*s;
 
-  if ((s = malloc(size)) == NULL)
+  if (size <= 0)
+    return (NULL);
+  s = malloc(size);
+  if (s == NULL)
     return (NULL);
   zeros(s, size);
   return (s);

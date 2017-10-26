@@ -5,6 +5,7 @@
 ** session info start / end
 */
 
+#include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -81,7 +82,7 @@ int		start_session(session_info_t *session, int ac, char **av)
 
 int		end_session(session_info_t *session, struct termios *old)
 {
-  mprintf("Ending session of : %s\n", session->username);
+  mprintf("\nEnding session of : %s\n", session->username);
   if (tcsetattr(0, TCSANOW, old) == -1)
     mdprintf(2, "Error : Could not reset term configs\n");
   sfree(&session->username);
@@ -92,6 +93,8 @@ int		end_session(session_info_t *session, struct termios *old)
     mdprintf(2, "Error : Could not close socket\n");
     return (-1);
   }
+  mprintf("Waiting for threads to end : ");
+  kill(getpid(), SIGUSR1);
   if (pthread_cancel(session->rthread) == -1 ||
       pthread_cancel(session->sthread) == -1 ||
       pthread_join(session->rthread, NULL) == -1 ||
@@ -100,5 +103,6 @@ int		end_session(session_info_t *session, struct termios *old)
     mdprintf(2, "Error : Could not cancel or stop the server thread\n");
     return (-1);
   }
+  mprintf("Done\n");
   return (0);
 }

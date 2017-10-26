@@ -25,8 +25,11 @@
 
 # define STATUS_OK	(0)
 # define ACCEPT_FAILED	(-1)
+# define COM_ERROR	(-2)
 
 # define CON_TIMEOUT	(5)
+
+# define NB_FCTION	(2)
 
 struct		session_info_s
 {
@@ -40,7 +43,22 @@ struct		session_info_s
   int		status;
 };
 
+struct                  header_s
+{
+  int                   action;
+  int                   pktlen;
+};
+
+struct          rcv_ptr_tab_s
+{
+  int           action;
+  int           (* fction)(struct session_info_s *session,
+			    struct header_s *header);
+};
+
+typedef struct header_s header_t;
 typedef struct session_info_s session_info_t;
+typedef struct rcv_ptr_tab_s rcv_ptr_tab_t;
 
 int	start_session(session_info_t *session, int ac, char **av);
 int	end_session(session_info_t *session, struct termios *old);
@@ -49,5 +67,10 @@ int	start_server(session_info_t *session);
 int	start_server_thread(session_info_t *session);
 int	connect_client(session_info_t *session);
 int	start_client_thread(session_info_t *session);
+
+int	receive(session_info_t *session);
+int	receive_welcome(session_info_t *session, header_t *header);
+int	receive_msg(session_info_t *session, header_t *header);
+int	send_msg(session_info_t *session, int action, char *msg);
 
 #endif /* !REMOTE_TTY_H_ */

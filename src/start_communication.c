@@ -6,6 +6,7 @@
 */
 
 #include "remote-tty.h"
+#include "protocol.h"
 
 #include "my.h"
 #include "defines.h"
@@ -31,8 +32,12 @@ int		start_communication(session_info_t *session)
   cmds = NULL;
   if (start_threads(session) == -1)
     return (-1);
+  if (session->side == CLIENT)
+    send_msg(session, WELCOME, session->username);
   while ((line = get_cmd(cmds, " > ")) != NULL)
   {
+    if (send_msg(session, SIMPLE_MSG, line) == -1)
+      mprintf("Error : communication\n");
     cmds = tab_append(cmds, line);
   }
   free_tab(cmds);

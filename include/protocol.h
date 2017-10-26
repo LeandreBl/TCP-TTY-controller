@@ -1,0 +1,16 @@
+/*
+** EPITECH PROJECT, 2017
+** remote-tty
+** File description:
+** protocol header
+*/
+
+#ifndef PROTOCOL_H_
+# define PROTOCOL_H_
+
+# define MAGIC_NUMBER	(0x125ad5af)
+
+# define WELCOME	(1)
+# define SIMPLE_MSG	(2)
+
+#endif /* !PROTOCOL_H_ */

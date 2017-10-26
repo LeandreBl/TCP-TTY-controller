@@ -24,6 +24,9 @@ SRCS	+= src/server.c
 SRCS	+= src/server_thread.c
 SRCS	+= src/client.c
 SRCS	+= src/client_thread.c
+SRCS	+= src/receive.c
+SRCS	+= src/send_welcome.c
+SRCS	+= src/send_msg.c
 
 OBJ	= $(SRCS:.c=.o)
 

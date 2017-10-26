@@ -5,6 +5,8 @@
 ** main
 */
 
+#include <signal.h>
+
 #include "my.h"
 #include "defines.h"
 
@@ -44,6 +46,14 @@ static int		get_old_conf(struct termios *old)
   return (0);
 }
 
+static void		sigusr_handler(int sig)
+{
+  if (sig == SIGUSR1)
+  {
+    mprintf("\rCanceling reads\n");
+  }
+}
+
 int			main(int ac, char **av)
 {
   session_info_t	session;
@@ -56,6 +66,7 @@ int			main(int ac, char **av)
   }
   if (get_old_conf(&old) == -1)
     return (-1);
+  signal(SIGUSR1, sigusr_handler);
   info_session(&session);
   if (start_communication(&session) == -1)
   {
