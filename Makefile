@@ -22,6 +22,8 @@ SRCS	+= src/session.c
 SRCS	+= src/start_communication.c
 SRCS	+= src/server.c
 SRCS	+= src/server_thread.c
+SRCS	+= src/client.c
+SRCS	+= src/client_thread.c
 
 OBJ	= $(SRCS:.c=.o)
 
@@ -37,11 +39,11 @@ $(NAME): $(OBJ)
 	@	tput setaf 2; cat include/signature; tput sgr0
 
 clean:
-	@	$(MAKE) lib/C clean > /dev/null
+	$(MAKE) lib/C clean
 	$(RM) $(OBJ)
 
 fclean: clean
-	@	$(MAKE) lib/C fclean > /dev/null
+	$(MAKE) lib/C fclean
 	$(RM) $(NAME)
 
 re: fclean all

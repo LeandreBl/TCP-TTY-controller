@@ -54,6 +54,9 @@ int		start_session(session_info_t *session, int ac, char **av)
   session->username = NULL;
   session->side = SERVER;
   session->ip = NULL;
+  session->status = STATUS_OK;
+  session->csocket = -1;
+  session->socket = -1;
   while (i < ac)
   {
     if (my_strcmp(av[i], USERNAME_FLAG) == 0 && av[i + 1])
@@ -79,19 +82,23 @@ int		start_session(session_info_t *session, int ac, char **av)
 int		end_session(session_info_t *session, struct termios *old)
 {
   mprintf("Ending session of : %s\n", session->username);
+  if (tcsetattr(0, TCSANOW, old) == -1)
+    mdprintf(2, "Error : Could not reset term configs\n");
   sfree(&session->username);
   sfree(&session->ip);
-  if (session->socket > 0 && close(session->socket) == -1)
+  if ((session->socket > 0 && close(session->socket) == -1) ||
+      (session->csocket > 0 && close(session->csocket) == -1))
   {
     mdprintf(2, "Error : Could not close socket\n");
     return (-1);
   }
-  if (pthread_cancel(session->thread) == -1 ||
-      pthread_join(session->thread, NULL) == -1)
-  {
+  if (pthread_cancel(session->rthread) == -1 ||
+      pthread_cancel(session->sthread) == -1 ||
+      pthread_join(session->rthread, NULL) == -1 ||
+      pthread_join(session->sthread, NULL) == -1)
+    {
     mdprintf(2, "Error : Could not cancel or stop the server thread\n");
     return (-1);
   }
-  tcsetattr(0, TCSANOW, old);
   return (0);
 }

@@ -16,7 +16,7 @@
 
 int			start_server(session_info_t *session)
 {
-  struct sockaddr_in	serv_addr;
+  struct sockaddr_in	sin;
 
   session->socket = socket(AF_INET, SOCK_STREAM, 0);
   if (session->socket == -1)
@@ -24,11 +24,12 @@ int			start_server(session_info_t *session)
     mdprintf(2, "Error : Could not create server's socket\n");
     return (-1);
   }
-  zeros((char *)&serv_addr, sizeof(serv_addr));
-  serv_addr.sin_family = AF_INET;
-  serv_addr.sin_addr.s_addr = INADDR_ANY;
-  serv_addr.sin_port = htons(SERVER_PORT);
-  if (bind(session->socket, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1)
+  zeros((char *)&sin, sizeof(sin));
+  sin.sin_addr.s_addr = htonl(INADDR_ANY);
+  sin.sin_family = AF_INET;
+  sin.sin_port = htons(SERVER_PORT);
+  if (bind(session->socket, (struct sockaddr *)&sin,
+	   sizeof(struct sockaddr_in)) == -1)
   {
     mdprintf(2, "Error : Could not bind sockaddr with server socket\n");
     return (-1);

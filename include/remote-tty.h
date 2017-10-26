@@ -10,11 +10,12 @@
 
 # include <pthread.h>
 # include <termios.h>
+# include <arpa/inet.h>
 
 # define SERVER		(1)
 # define CLIENT		(0)
 
-# define SERVER_PORT	(14742)
+# define SERVER_PORT	(14743)
 
 # define USERNAME_FLAG	("-u")
 # define IP_FLAG	("-ip")
@@ -22,13 +23,21 @@
 
 # define MEM_ERROR	("Error : Not enough memory\n")
 
+# define STATUS_OK	(0)
+# define ACCEPT_FAILED	(-1)
+
+# define CON_TIMEOUT	(5)
+
 struct		session_info_s
 {
   char		*username;
   int		side;
   char		*ip;
   int		socket;
-  pthread_t	thread;
+  int		csocket;
+  pthread_t	sthread;
+  pthread_t	rthread;
+  int		status;
 };
 
 typedef struct session_info_s session_info_t;
@@ -38,5 +47,7 @@ int	end_session(session_info_t *session, struct termios *old);
 int	start_communication(session_info_t *session);
 int	start_server(session_info_t *session);
 int	start_server_thread(session_info_t *session);
+int	connect_client(session_info_t *session);
+int	start_client_thread(session_info_t *session);
 
 #endif /* !REMOTE_TTY_H_ */

@@ -6,28 +6,63 @@
 */
 
 #include <pthread.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 
 #include "remote-tty.h"
 
 #include "my.h"
 #include "defines.h"
 
-static void		server_thread(session_info_t *session)
+static int		accept_new_client(session_info_t *session)
 {
-  mprintf("Je suis le thread de %s\n", session->username);
+  socklen_t		size;
+  struct sockaddr_in	csin;
+
+  mprintf("\rWaiting for new client : ");
+  if (listen(session->socket, 2) == -1)
+  {
+    mdprintf(2, "Error : Could not listen on port %d\n", SERVER_PORT);
+    return (-1);
+  }
+  size = sizeof(struct sockaddr_in);
+  session->csocket = accept(session->socket,
+				  (struct sockaddr *)&csin, &size);
+  if (session->csocket == -1)
+  {
+    mdprintf(2, "Error : Could not accept the connection of the client\n");
+    return (-1);
+  }
+  mprintf("\n%s client is now connected.\n", inet_ntoa(csin.sin_addr));
+  return (0);
+}
+
+static void		receive_thread(session_info_t *session)
+{
+  if (session->side == SERVER && accept_new_client(session) == -1)
+  {
+    session->status = ACCEPT_FAILED;
+    return;
+  }
+  while (session->status == STATUS_OK)
+  {
+    if (session->csocket == -1 && session->side == SERVER)
+      if (accept_new_client(session) == -1)
+	session->status = ACCEPT_FAILED;
+  }
 }
 
 int			start_server_thread(session_info_t *session)
 {
-  if (pthread_create(&session->thread, NULL,
-		     (void *)server_thread, (void *)session) == -1)
+  if (pthread_create(&session->rthread, NULL,
+		     (void *)receive_thread, (void *)session) == -1)
   {
-    mdprintf(2, "Error : Could not start server thread\n");
+    mdprintf(2, "Error : Could not start receive thread\n");
     return (-1);
   }
-  if (pthread_detach(session->thread) == -1)
+  if (pthread_detach(session->rthread) == -1)
   {
-    mdprintf(2, "Error : Could not detach server thread\n");
+    mdprintf(2, "Error : Could not detach receive thread\n");
     return (-1);
   }
   return (0);
