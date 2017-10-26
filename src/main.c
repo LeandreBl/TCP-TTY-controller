@@ -20,16 +20,12 @@ static void		info_session(session_info_t *session)
     mprintf("client\n");
   if (session->side == SERVER)
     mprintf("server\n");
-  if (session->ip != NULL)
-    mprintf("Connecting to : %s\n", session->ip);
+  mprintf("Try to connect on port : %d\n", session->port);
+  session->ip = get_ip(NULL);
+  if (session->ip == NULL)
+    mprintf("Error : Are you connected to internet ?\n");
   else
-  {
-    session->ip = get_ip(NULL);
-    if (session->ip == NULL)
-      mprintf("Error : Are you connected to internet ?\n");
-    else
-      mprintf("Server ip : %s\n", session->ip);
-  }
+    mprintf("Server ip : %s\n", session->ip);
   mprintf("\n");
 }
 

@@ -23,7 +23,7 @@ static int		accept_new_client(session_info_t *session)
   mprintf("\rWaiting for new client : ");
   if (listen(session->socket, 1) == -1)
   {
-    mdprintf(2, "Error : Could not listen on port %d\n", SERVER_PORT);
+    mdprintf(2, "Error : Could not listen on port %d\n", session->port);
     return (-1);
   }
   clilen = sizeof(csin);
@@ -56,13 +56,13 @@ static void		receive_thread(session_info_t *session)
 
 int			start_server_thread(session_info_t *session)
 {
-  if (pthread_create(&session->rthread, NULL,
+  if (pthread_create(&session->thread, NULL,
 		     (void *)receive_thread, (void *)session) == -1)
   {
     mdprintf(2, "Error : Could not start receive thread\n");
     return (-1);
   }
-  if (pthread_detach(session->rthread) == -1)
+  if (pthread_detach(session->thread) == -1)
   {
     mdprintf(2, "Error : Could not detach receive thread\n");
     return (-1);

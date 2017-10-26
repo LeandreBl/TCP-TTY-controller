@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2017
 ** remote-tty
 ** File description:
-** session info start / end
+** session info start
 */
 
 #include <signal.h>
@@ -13,6 +13,7 @@
 #include "defines.h"
 
 #include "remote-tty.h"
+#include "protocol.h"
 
 static int	change_username(session_info_t *session, const char *arg)
 {
@@ -47,17 +48,24 @@ static int	change_side(session_info_t *session, const char *arg)
   return (0);
 }
 
-int		start_session(session_info_t *session, int ac, char **av)
+static void	set_session(session_info_t *session)
 {
-  int		i;
-
-  i = 0;
   session->username = NULL;
   session->side = SERVER;
   session->ip = NULL;
   session->status = STATUS_OK;
   session->csocket = -1;
   session->socket = -1;
+  session->color = NULL;
+  session->port = SERVER_PORT;
+}
+
+int		start_session(session_info_t *session, int ac, char **av)
+{
+  int		i;
+
+  i = 0;
+  set_session(session);
   while (i < ac)
   {
     if (my_strcmp(av[i], USERNAME_FLAG) == 0 && av[i + 1])
@@ -69,6 +77,9 @@ int		start_session(session_info_t *session, int ac, char **av)
     if (my_strcmp(av[i], SIDE_FLAG) == 0 && av[i + 1])
       if (change_side(session, av[i + 1]) == -1)
 	return (-1);
+    if (my_strcmp(av[i], PORT_FLAG) == 0 && av[i + 1])
+      if ((session->port = my_getnbr(av[i + 1])) <= 0)
+	return (-1);
     ++i;
   }
   if (session->username == NULL)
@@ -77,33 +88,5 @@ int		start_session(session_info_t *session, int ac, char **av)
     if (session->username == NULL)
       return (-1);
   }
-  return (0);
-}
-
-int		end_session(session_info_t *session, struct termios *old)
-{
-  mprintf("\nEnding session of : %s\n", session->username);
-  if (tcsetattr(0, TCSANOW, old) == -1)
-    mdprintf(2, "Error : Could not reset term configs\n");
-  sfree(&session->username);
-  sfree(&session->ip);
-  if ((session->socket > 0 && close(session->socket) == -1) ||
-      (session->csocket > 0 && close(session->csocket) == -1))
-  {
-    mdprintf(2, "Error : Could not close socket\n");
-    return (-1);
-  }
-  mprintf("Waiting for threads to end : ");
-  kill(getpid(), SIGUSR1);
-  if (session->socket > 0 || session->csocket > 0)
-    if (pthread_cancel(session->rthread) == -1 ||
-	pthread_cancel(session->sthread) == -1 ||
-	pthread_join(session->rthread, NULL) == -1 ||
-	pthread_join(session->sthread, NULL) == -1)
-    {
-      mdprintf(2, "Error : Could not cancel or stop the server thread\n");
-      return (-1);
-    }
-  mprintf("Done\n");
   return (0);
 }

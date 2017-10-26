@@ -8,7 +8,7 @@
 #ifndef PROTOCOL_H_
 # define PROTOCOL_H_
 
-# define SERVER_PORT	(14873)
+# define SERVER_PORT	(14848)
 
 # define MAGIC_NUMBER	(0x125ad5af)
 

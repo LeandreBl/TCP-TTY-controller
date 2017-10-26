@@ -36,6 +36,8 @@ char				*add_str(char *src, va_list *va)
   char				*str;
 
   str = va_arg(*va, char *);
+  if (str == NULL)
+    return (src);
   return (insert(src, str, my_strlen(src)));
 }
 

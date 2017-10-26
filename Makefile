@@ -19,15 +19,17 @@ LIB	+= -lpthread
 
 SRCS	= src/main.c
 SRCS	+= src/session.c
+SRCS	+= src/end_session.c
 SRCS	+= src/start_communication.c
 SRCS	+= src/server.c
 SRCS	+= src/server_thread.c
 SRCS	+= src/client.c
-SRCS	+= src/client_thread.c
 SRCS	+= src/receive.c
 SRCS	+= src/receive_welcome.c
 SRCS	+= src/send_msg.c
 SRCS	+= src/receive_leave.c
+SRCS	+= src/commands.c
+SRCS	+= src/change_color.c
 
 OBJ	= $(SRCS:.c=.o)
 

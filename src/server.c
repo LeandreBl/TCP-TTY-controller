@@ -28,7 +28,7 @@ int			start_server(session_info_t *session)
   zeros((char *)&sin, sizeof(sin));
   sin.sin_addr.s_addr = INADDR_ANY;
   sin.sin_family = AF_INET;
-  sin.sin_port = htons(SERVER_PORT);
+  sin.sin_port = htons(session->port);
   if (bind(session->socket, (struct sockaddr *)&sin,
 	   sizeof(struct sockaddr_in)) == -1)
   {

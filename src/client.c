@@ -17,11 +17,12 @@
 #include "defines.h"
 
 static void		fill_serv_addr(struct sockaddr_in *serv_addr,
-				       struct hostent *info)
+				       struct hostent *info,
+				       int port)
 {
   zeros((char *)serv_addr, sizeof(*serv_addr));
   serv_addr->sin_addr = *(struct in_addr *)info->h_addr;
-  serv_addr->sin_port = htons(SERVER_PORT);
+  serv_addr->sin_port = htons(port);
   serv_addr->sin_family = AF_INET;
 }
 
@@ -43,7 +44,7 @@ int			connect_client(session_info_t *session)
     mdprintf(2, "Error : Could not create client socket\n");
     return (-1);
   }
-  fill_serv_addr(&serv_addr, info);
+  fill_serv_addr(&serv_addr, info, session->port);
   if (connect(session->csocket, (struct sockaddr *)&serv_addr,
 	      sizeof(struct sockaddr)) == -1)
   {

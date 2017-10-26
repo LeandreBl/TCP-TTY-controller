@@ -12,6 +12,7 @@
 
 #include "my.h"
 #include "defines.h"
+#include "colors.h"
 
 int		send_msg(session_info_t *session, int action, char *msg)
 {
@@ -21,11 +22,11 @@ int		send_msg(session_info_t *session, int action, char *msg)
 
   magic = MAGIC_NUMBER;
   header.action = action;
-  header.pktlen = my_strlen(msg) + my_strlen(session->username) + 1;
-  send = catalloc("%s-%s", session->username, msg);
+  send = catalloc("%s%s-%s", session->color, session->username, msg);
+  header.pktlen = my_strlen(send);
   if (send == NULL)
     return (-1);
-  send[my_strlen(session->username)] = 0;
+  send[my_strlen(session->username) + my_strlen(session->color)] = 0;
   if (write(session->csocket, &magic, sizeof(int)) == -1 ||
       write(session->csocket, &header, sizeof(header_t)) == -1 ||
       write(session->csocket, send, header.pktlen) == -1)
@@ -51,7 +52,7 @@ int		receive_msg(session_info_t *session, header_t *header)
     mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
     return (-1);
   }
-  mprintf("\r %s : %s\n > ", msg, msg + my_strlen(msg) + 1);
+  mprintf("\r %s : %s%s\n > ", msg, msg + my_strlen(msg) + 1, RESET);
   sfree(&msg);
   return (0);
 }

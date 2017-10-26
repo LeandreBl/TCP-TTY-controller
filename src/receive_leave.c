@@ -27,6 +27,8 @@ int		receive_leave(session_info_t *session, header_t *header)
   }
   mprintf("\r -%s left the chat\n", msg);
   sfree(&msg);
+  close(session->csocket);
+  close(session->socket);
   session->csocket = -1;
   session->socket = -1;
   return (0);
