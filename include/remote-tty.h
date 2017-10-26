@@ -15,7 +15,7 @@
 # define SERVER		(1)
 # define CLIENT		(0)
 
-# define SERVER_PORT	(14743)
+# define SERVER_PORT	(14443)
 
 # define USERNAME_FLAG	("-u")
 # define IP_FLAG	("-ip")

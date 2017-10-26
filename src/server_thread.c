@@ -16,18 +16,18 @@
 
 static int		accept_new_client(session_info_t *session)
 {
-  socklen_t		size;
+  socklen_t		clilen;
   struct sockaddr_in	csin;
 
   mprintf("\rWaiting for new client : ");
-  if (listen(session->socket, 2) == -1)
+  if (listen(session->socket, 5) == -1)
   {
     mdprintf(2, "Error : Could not listen on port %d\n", SERVER_PORT);
     return (-1);
   }
-  size = sizeof(struct sockaddr_in);
+  clilen = sizeof(csin);
   session->csocket = accept(session->socket,
-				  (struct sockaddr *)&csin, &size);
+				  (struct sockaddr *)&csin, &clilen);
   if (session->csocket == -1)
   {
     mdprintf(2, "Error : Could not accept the connection of the client\n");

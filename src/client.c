@@ -15,6 +15,15 @@
 #include "my.h"
 #include "defines.h"
 
+static void		fill_serv_addr(struct sockaddr_in *serv_addr,
+				       struct hostent *info)
+{
+  zeros((char *)serv_addr, sizeof(*serv_addr));
+  serv_addr->sin_addr = *(struct in_addr *)info->h_addr;
+  serv_addr->sin_port = htons(SERVER_PORT);
+  serv_addr->sin_family = AF_INET;
+}
+
 int			connect_client(session_info_t *session)
 {
   struct hostent	*info;
@@ -22,21 +31,18 @@ int			connect_client(session_info_t *session)
 
   mprintf("Connecting to %s ...\n", session->ip);
   info = gethostbyname(session->ip);
-  session->csocket = socket(AF_INET, SOCK_DGRAM, 0);
-  if (session->csocket == -1)
-  {
-    mdprintf(2, "Error : Could not create client socket\n");
-    return (-1);
-  }
-  zeros((char *)&serv_addr, sizeof(serv_addr));
   if (info == NULL)
   {
     mdprintf(2, "Error : Could not resolve hostname %s\n", session->ip);
     return (-1);
   }
-  serv_addr.sin_addr = *(struct in_addr *)info->h_addr;
-  serv_addr.sin_port = htons(SERVER_PORT);
-  serv_addr.sin_family = AF_INET;
+  session->csocket = socket(AF_INET, SOCK_STREAM, 0);
+  if (session->csocket == -1)
+  {
+    mdprintf(2, "Error : Could not create client socket\n");
+    return (-1);
+  }
+  fill_serv_addr(&serv_addr, info);
   if (connect(session->csocket, (struct sockaddr *)&serv_addr,
 	      sizeof(struct sockaddr)) == -1)
   {
