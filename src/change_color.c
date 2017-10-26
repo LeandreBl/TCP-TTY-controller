@@ -13,20 +13,24 @@
 
 static int	howto(const char *cmd)
 {
-  if (my_strncmp(cmd, "change color ", 13) != 0)
+  if (my_strncmp(cmd, "set color ", 10) != 0)
   {
-    mprintf("Usage : !change color <color>\n");
+    mprintf("Usage : !set color <color>\n");
     mprintf("\tcyan\n\tred\n\tgreen\n\tyellow\n\tblue\n\twhite\n");
     return (1);
   }
   return (0);
 }
 
-int		change_color(const char *cmd, session_info_t *session)
+int		set_color(const char *cmd, session_info_t *session)
 {
+  char		*prompt_cur;
+
+  prompt_cur = session->prompt + my_strlen(session->color);
+  shift_right(prompt_cur, my_strlen(RESET));
   if (howto(cmd))
     return (0);
-  cmd += my_strlen("change color ");
+  cmd += 10;
   if (my_strcmp(cmd, "cyan") == 0)
     session->color = BOLDCYAN;
   else if (my_strcmp(cmd, "red") == 0)
@@ -41,5 +45,9 @@ int		change_color(const char *cmd, session_info_t *session)
     session->color = BOLDBLUE;
   else if (my_strcmp(cmd, "reset") == 0)
     session->color = NULL;
+  session->prompt = catalloc("%s%s%s%F", session->color, prompt_cur,
+			     RESET, session->prompt);
+  if (session->prompt == NULL)
+    return (-1);
   return (0);
 }

@@ -12,6 +12,7 @@
 
 #include "my.h"
 #include "defines.h"
+#include "colors.h"
 
 int		receive_leave(session_info_t *session, header_t *header)
 {
@@ -26,7 +27,7 @@ int		receive_leave(session_info_t *session, header_t *header)
     return (-1);
   }
   unencrypt(msg, header->pktlen);
-  mprintf("\r -%s left the chat\n", msg);
+  mprintf("\r -%s%s %s%sleft the chat%s\n", BOLDRED, msg, RESET, WHITE, RESET);
   sfree(&msg);
   close(session->csocket);
   close(session->socket);

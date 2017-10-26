@@ -21,18 +21,27 @@ static int	start_threads(session_info_t *session)
   return (0);
 }
 
+static int	start_transmission(session_info_t *session)
+{
+  routine_ioctl();
+  if (start_threads(session) == -1)
+    return (-1);
+  if (session->side == CLIENT && send_msg(session, WELCOME, NULL) == -1)
+      return (-1);
+  if (set_prompt("set prompt > ", session) == -1)
+    return (-1);
+  return (0);
+}
+
 int		start_communication(session_info_t *session)
 {
   char		*line;
   char		**cmds;
 
-  routine_ioctl();
   cmds = NULL;
-  if (start_threads(session) == -1)
+  if (start_transmission(session) == -1)
     return (-1);
-  if (session->side == CLIENT)
-    send_msg(session, WELCOME, NULL);
-  while ((line = get_cmd(cmds, " > ")) != NULL)
+  while ((line = get_cmd(cmds, session->prompt)) != NULL)
   {
     if (line[0] == '!' && user_command(line + 1, session) == 1)
       break;

@@ -28,10 +28,11 @@
 # define CON_TIMEOUT	(2)
 
 # define NB_FCTION	(4)
-# define NB_CMDS        (2)
+# define NB_CMDS        (3)
 
 struct		session_info_s
 {
+  char		*prompt;
   char		*command;
   char		*color;
   char		*username;
@@ -85,7 +86,8 @@ int	receive_command(session_info_t *session, header_t *header);
 
 int	user_command(const char *cmd, session_info_t *session);
 int	cmd_quit(const char *cmd, session_info_t *session);
-int	change_color(const char *cmd, session_info_t *session);
+int	set_color(const char *cmd, session_info_t *session);
+int	set_prompt(const char *cmd, session_info_t *session);
 int	send_command_request(const char *cmd, session_info_t *session);
 
 int	encrypt(char *msg, int pktlen);

@@ -40,7 +40,7 @@ static int	change_ip(session_info_t *session, const char *arg)
   return (0);
 }
 
-static void	set_session(session_info_t *session)
+static int	set_session(session_info_t *session)
 {
   session->command = NULL;
   session->username = NULL;
@@ -51,6 +51,10 @@ static void	set_session(session_info_t *session)
   session->socket = -1;
   session->color = NULL;
   session->port = SERVER_PORT;
+  session->prompt = NULL;
+  if (set_prompt("set prompt   > ", session) == -1)
+    return (-1);
+  return (0);
 }
 
 int		start_session(session_info_t *session, int ac, char **av)
@@ -58,7 +62,8 @@ int		start_session(session_info_t *session, int ac, char **av)
   int		i;
 
   i = 0;
-  set_session(session);
+  if (set_session(session) == -1)
+    return (-1);
   while (i < ac)
   {
     if (my_strcmp(av[i], USERNAME_FLAG) == 0 && av[i + 1])

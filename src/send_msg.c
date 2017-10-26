@@ -54,7 +54,7 @@ int		receive_msg(session_info_t *session, header_t *header)
     return (-1);
   }
   unencrypt(msg, header->pktlen);
-  mprintf("\r %s : %s%s\n > ", msg, msg + my_strlen(msg) + 1, RESET);
+  mprintf("\r %s %s: %s%s%s\n > ", msg, BOLDWHITE, RESET, WHITE, msg + my_strlen(msg) + 1, RESET);
   sfree(&msg);
   return (0);
 }

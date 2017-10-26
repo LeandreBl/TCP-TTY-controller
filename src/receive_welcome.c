@@ -12,6 +12,7 @@
 
 #include "my.h"
 #include "defines.h"
+#include "colors.h"
 
 int		receive_welcome(session_info_t *session, header_t *header)
 {
@@ -24,6 +25,6 @@ int		receive_welcome(session_info_t *session, header_t *header)
     return (-1);
   }
   unencrypt(name, header->pktlen);
-  mprintf("\r%S joined the chat\n > ", name);
+  mprintf("\r%s%S%s joined the chat%s\n > ", BOLDGREEN, name, BOLDWHITE, RESET);
   return (0);
 }
