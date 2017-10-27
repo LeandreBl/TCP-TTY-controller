@@ -28,8 +28,6 @@ static int	start_transmission(session_info_t *session)
     return (-1);
   if (session->side == CLIENT && send_msg(session, WELCOME, NULL) == -1)
       return (-1);
-  if (set_prompt("set prompt > ", session) == -1)
-    return (-1);
   return (0);
 }
 
@@ -41,7 +39,7 @@ int		start_communication(session_info_t *session)
   cmds = NULL;
   if (start_transmission(session) == -1)
     return (-1);
-  while ((line = get_cmd(cmds, session->prompt)) != NULL)
+  while ((line = get_cmd(cmds, PROMPT_CUR)) != NULL)
   {
     if (line[0] == '!' && user_command(line + 1, session) == 1)
       break;

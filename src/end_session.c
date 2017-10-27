@@ -22,7 +22,6 @@ int		end_session(session_info_t *session, struct termios *old)
     mdprintf(2, "Error : Could not reset term configs\n");
   sfree(&session->username);
   sfree(&session->ip);
-  sfree(&session->prompt);
   if ((session->socket > 0 && close(session->socket) == -1) ||
       (session->csocket > 0 && close(session->csocket) == -1))
   {

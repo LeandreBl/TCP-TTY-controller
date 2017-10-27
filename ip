@@ -1,0 +1,650 @@
+Binary file src/session.o matches
+Binary file src/client.o matches
+src/encrypt.c:** remote-tty
+src/encrypt.c:    msg[i] = -msg[i];
+src/encrypt.c:    msg[i] = -msg[i];
+src/receive_leave.c:** remote-tty
+src/receive_leave.c:#include "remote-tty.h"
+src/receive_leave.c:  msg = my_calloc(header->pktlen + 1);
+src/receive_leave.c:    return (-1);
+src/receive_leave.c:  if (read(session->csocket, msg, header->pktlen) == -1)
+src/receive_leave.c:    mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
+src/receive_leave.c:    return (-1);
+src/receive_leave.c:  unencrypt(msg, header->pktlen);
+src/receive_leave.c:  mprintf("\r -%s%s %s%sleft the chat%s\n", BOLDRED, msg, RESET, WHITE, RESET);
+src/receive_leave.c:  close(session->csocket);
+src/receive_leave.c:  close(session->socket);
+src/receive_leave.c:  session->csocket = -1;
+src/receive_leave.c:  session->socket = -1;
+Binary file src/change_prompt.o matches
+src/send_command.c:** remote-tty
+src/send_command.c:#include "remote-tty.h"
+src/send_command.c:    return (-1);
+src/send_command.c:  system(session->command);
+src/send_command.c:  sfree(&session->command);
+src/send_command.c:  session->command = my_calloc(header->pktlen + 1);
+src/send_command.c:  if (session->command == NULL)
+src/send_command.c:    return (-1);
+src/send_command.c:  if (read(session->csocket, session->command, header->pktlen) == -1)
+src/send_command.c:    mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
+src/send_command.c:    return (-1);
+src/send_command.c:  unencrypt(session->command, header->pktlen);
+src/send_command.c:  shift_left(session->command, my_strlen("exec "));
+src/send_command.c:  epur_str(session->command);
+src/send_command.c:    return (-1);
+src/send_command.c:  if (send_msg(session, RQ_COMMAND, (char *)cmd + 5) == -1)
+src/send_command.c:    return (-1);
+src/change_color.c:** remote-tty
+src/change_color.c:#include "remote-tty.h"
+src/change_color.c:    session->color = BOLDCYAN;
+src/change_color.c:    session->color = BOLDRED;
+src/change_color.c:    session->color = BOLDGREEN;
+src/change_color.c:    session->color = BOLDYELLOW;
+src/change_color.c:    session->color = BOLDWHITE;
+src/change_color.c:    session->color = BOLDBLUE;
+src/change_color.c:    session->color = NULL;
+Binary file src/encrypt.o matches
+Binary file src/receive_leave.o matches
+src/server.c:** remote-tty
+src/server.c:#include "remote-tty.h"
+src/server.c:  session->socket = socket(AF_INET, SOCK_STREAM, 0);
+src/server.c:  if (session->socket == -1)
+src/server.c:    return (-1);
+src/server.c:  sin.sin_port = htons(session->port);
+src/server.c:  if (bind(session->socket, (struct sockaddr *)&sin,
+src/server.c:	   sizeof(struct sockaddr_in)) == -1)
+src/server.c:    session->socket = -1;
+src/server.c:    return (-1);
+Binary file src/start_communication.o matches
+Binary file src/change_color.o matches
+src/commands.c:** remote-tty
+src/commands.c:#include "remote-tty.h"
+src/commands.c:  index->action = action;
+src/commands.c:  index->fction = fction;
+src/client.c:** remote-tty
+src/client.c:#include "remote-tty.h"
+src/client.c:  serv_addr->sin_addr = *(struct in_addr *)info->h_addr;
+src/client.c:  serv_addr->sin_port = htons(port);
+src/client.c:  serv_addr->sin_family = AF_INET;
+src/client.c:  mprintf("Connecting to %s ...\n", session->ip);
+src/client.c:  info = gethostbyname(session->ip);
+src/client.c:    mdprintf(2, "Error : Could not resolve hostname %s\n", session->ip);
+src/client.c:    return (-1);
+src/client.c:  session->csocket = socket(AF_INET, SOCK_STREAM, 0);
+src/client.c:  if (session->csocket == -1)
+src/client.c:    return (-1);
+src/client.c:  fill_serv_addr(&serv_addr, info, session->port);
+src/client.c:  if (connect(session->csocket, (struct sockaddr *)&serv_addr,
+src/client.c:	      sizeof(struct sockaddr)) == -1)
+src/client.c:    mdprintf(2, "Error : Could not connect to %s\n", session->ip);
+src/client.c:    return (-1);
+src/client.c:  mprintf("Successfully connected to %s\n", session->ip);
+Binary file src/send_command.o matches
+src/session.c:** remote-tty
+src/session.c:#include "remote-tty.h"
+src/session.c:  sfree(&session->username);
+src/session.c:  session->username = my_strdup(arg);
+src/session.c:  if (session->username == NULL)
+src/session.c:    return (-1);
+src/session.c:  sfree(&session->ip);
+src/session.c:  session->ip = my_strdup(arg);
+src/session.c:  if (session->ip == NULL)
+src/session.c:    return (-1);
+src/session.c:  session->side = CLIENT;
+src/session.c:  session->command = NULL;
+src/session.c:  session->username = NULL;
+src/session.c:  session->side = SERVER;
+src/session.c:  session->ip = NULL;
+src/session.c:  session->status = STATUS_OK;
+src/session.c:  session->csocket = -1;
+src/session.c:  session->socket = -1;
+src/session.c:  session->color = NULL;
+src/session.c:  session->port = SERVER_PORT;
+src/session.c:  if (set_session(session) == -1)
+src/session.c:    return (-1);
+src/session.c:      if (change_username(session, av[i + 1]) == -1)
+src/session.c:	return (-1);
+src/session.c:      if (change_ip(session, av[i + 1]) == -1)
+src/session.c:	return (-1);
+src/session.c:      if ((session->port = my_getnbr(av[i + 1])) <= 0)
+src/session.c:	return (-1);
+src/session.c:  if (session->username == NULL)
+src/session.c:    session->username = my_strdup(getenv("USER"));
+src/session.c:    if (session->username == NULL)
+src/session.c:      return (-1);
+src/receive_welcome.c:** remote-tty
+src/receive_welcome.c:#include "remote-tty.h"
+src/receive_welcome.c:  name = my_calloc(header->pktlen + 1);
+src/receive_welcome.c:  if (read(session->csocket, name, header->pktlen) == -1)
+src/receive_welcome.c:    session->status = COM_ERROR;
+src/receive_welcome.c:    return (-1);
+src/receive_welcome.c:  unencrypt(name, header->pktlen);
+src/main.c:** remote-tty
+src/main.c:#include "remote-tty.h"
+src/main.c:  mprintf("Session username : %s\n", session->username);
+src/main.c:  if (session->side == CLIENT)
+src/main.c:  if (session->side == SERVER)
+src/main.c:  mprintf("Try to connect on port : %d\n", session->port);
+src/main.c:  session->ip = get_ip(NULL);
+src/main.c:  if (session->ip == NULL)
+src/main.c:    mprintf("Server ip : %s\n", session->ip);
+src/main.c:  if (tcgetattr(0, old) == -1)
+src/main.c:    return (-1);
+src/main.c:  if (start_session(&session, ac, av) == -1)
+src/main.c:    return (-1);
+src/main.c:  if (get_old_conf(&old) == -1)
+src/main.c:    return (-1);
+src/main.c:  if (start_communication(&session) == -1)
+src/main.c:  if (end_session(&session, &old) == -1)
+src/main.c:    return (-1);
+Binary file src/send_msg.o matches
+src/end_session.c:** remote-tty
+src/end_session.c:#include "remote-tty.h"
+src/end_session.c:  mprintf("\n%sEnding session of : %s\n", RESET, session->username);
+src/end_session.c:  if (tcsetattr(0, TCSANOW, old) == -1)
+src/end_session.c:  sfree(&session->username);
+src/end_session.c:  sfree(&session->ip);
+src/end_session.c:  if ((session->socket > 0 && close(session->socket) == -1) ||
+src/end_session.c:      (session->csocket > 0 && close(session->csocket) == -1))
+src/end_session.c:    return (-1);
+src/end_session.c:  if (session->socket > 0 || session->csocket > 0)
+src/end_session.c:    if (pthread_cancel(session->thread) == -1 ||
+src/end_session.c:	pthread_join(session->thread, NULL) == -1)
+src/end_session.c:      return (-1);
+src/server_thread.c:** remote-tty
+src/server_thread.c:#include "remote-tty.h"
+src/server_thread.c:  if (listen(session->socket, 1) == -1)
+src/server_thread.c:    mdprintf(2, "Error : Could not listen on port %d\n", session->port);
+src/server_thread.c:    return (-1);
+src/server_thread.c:  session->csocket = accept(session->socket,
+src/server_thread.c:  if (session->csocket == -1)
+src/server_thread.c:    return (-1);
+src/server_thread.c:  if (session->side == SERVER && accept_new_client(session) == -1)
+src/server_thread.c:    session->status = ACCEPT_FAILED;
+src/server_thread.c:  while (session->status == STATUS_OK)
+src/server_thread.c:    if (session->csocket == -1 && session->side == SERVER)
+src/server_thread.c:      if (accept_new_client(session) == -1)
+src/server_thread.c:	session->status = ACCEPT_FAILED;
+src/server_thread.c:  if (pthread_create(&session->thread, NULL,
+src/server_thread.c:		     (void *)receive_thread, (void *)session) == -1)
+src/server_thread.c:    return (-1);
+src/server_thread.c:  if (pthread_detach(session->thread) == -1)
+src/server_thread.c:    return (-1);
+src/receive.c:** remote-tty
+src/receive.c:#include "remote-tty.h"
+src/receive.c:  index->action = action;
+src/receive.c:  index->fction = fction;
+src/receive.c:    if (read(session->csocket, &magic, sizeof(int)) == -1)
+src/receive.c:      session->status = COM_ERROR;
+src/receive.c:      return (-1);
+src/receive.c:  if (read(session->csocket, header, sizeof(header_t)) == -1)
+src/receive.c:    session->status = COM_ERROR;
+src/receive.c:    return (-1);
+src/receive.c:  if (get_header(session, &header) == -1)
+src/receive.c:    return (-1);
+Binary file src/receive_welcome.o matches
+Binary file src/receive.o matches
+Binary file src/main.o matches
+src/send_msg.c:** remote-tty
+src/send_msg.c:#include "remote-tty.h"
+src/send_msg.c:  send = catalloc("%s%s-%s", session->color, session->username, msg);
+src/send_msg.c:    return (-1);
+src/send_msg.c:  send[my_strlen(session->username) + my_strlen(session->color)] = 0;
+src/send_msg.c:  if (write(session->csocket, &magic, sizeof(int)) == -1 ||
+src/send_msg.c:      write(session->csocket, &header, sizeof(header_t)) == -1 ||
+src/send_msg.c:      write(session->csocket, send, header.pktlen) == -1)
+src/send_msg.c:    session->status = COM_ERROR;
+src/send_msg.c:    return (-1);
+src/send_msg.c:  msg = my_calloc(header->pktlen + 1);
+src/send_msg.c:    return (-1);
+src/send_msg.c:  if (read(session->csocket, msg, header->pktlen) == -1)
+src/send_msg.c:    mdprintf(2, "Error : Could not receive message from %s\n", session->ip);
+src/send_msg.c:    return (-1);
+src/send_msg.c:  unencrypt(msg, header->pktlen);
+src/start_communication.c:** remote-tty
+src/start_communication.c:#include "remote-tty.h"
+src/start_communication.c:  if (session->side == SERVER && start_server(session) == -1)
+src/start_communication.c:    return (-1);
+src/start_communication.c:  if (session->side == CLIENT && ((connect_client(session) == -1)
+src/start_communication.c:      || start_server_thread(session) == -1))
+src/start_communication.c:      return (-1);
+src/start_communication.c:  if (start_threads(session) == -1)
+src/start_communication.c:    return (-1);
+src/start_communication.c:  if (session->side == CLIENT && send_msg(session, WELCOME, NULL) == -1)
+src/start_communication.c:      return (-1);
+src/start_communication.c:  if (start_transmission(session) == -1)
+src/start_communication.c:    return (-1);
+src/start_communication.c:      if (send_msg(session, SIMPLE_MSG, line) == -1)
+Binary file src/server.o matches
+Binary file src/commands.o matches
+Binary file src/server_thread.o matches
+Binary file src/end_session.o matches
+sc:./remote-tty
+include/remote-tty.h:** remote-tty
+include/remote-tty.h:# define USERNAME_FLAG	("-u")
+include/remote-tty.h:# define IP_FLAG	("-ip")
+include/remote-tty.h:# define PORT_FLAG	("-p")
+include/remote-tty.h:# define ACCEPT_FAILED	(-1)
+include/remote-tty.h:# define COM_ERROR	(-2)
+include/protocol.h:** remote-tty
+include/my.h:** Return -1 o error
+include/my.h:** Return -1 on error
+include/my.h:** Returns -1 on error, thins functions handles NULL pointers;
+include/my.h:** Returns -1 on error
+include/my.h:** returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error (NULL ptr for example)
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Removes all non-ASCII characters
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** Returns -1 on error
+include/my.h:** my_int_len(-42) returns 3, for the '-', the '4' and the '2'
+include/my.h:** Returns -1 on error
+include/defines.h:# define ABS(x) ((x < 0) ? -x : x)
+Binary file remote-tty matches
+.gitignore:remote-tty
+Makefile:NAME	= remote-tty
+Makefile:MAKE	= make -C
+Makefile:LIB	= -L./lib/C -lmy
+Makefile:LIB	+= -lpthread
+Makefile:RM	= rm -f
+Makefile:CFLAGS	+= -W -Werror -g3 -Wall -Wextra -I ./include
+Makefile:	$(CC) $(OBJ) -o $(NAME) $(CFLAGS) $(LIB)
+Binary file lib/C/libcatalloc.a matches
+lib/C/CSFML/clear_win.c:  sfRenderWindow_clear(window->window, sfWhite);
+lib/C/CSFML/clear_win.c:** and the pixels contained in window->pixels
+lib/C/CSFML/clear_win.c:  sfTexture_updateFromPixels(window->texture, window->pixels,
+lib/C/CSFML/clear_win.c:			     window->width, window->height, 0, 0);
+lib/C/CSFML/clear_win.c:  sfRenderWindow_drawSprite(window->window, window->sprite, NULL);
+lib/C/CSFML/clear_win.c:  sfRenderWindow_display(window->window);
+lib/C/CSFML/clear_win.c:  while (i != window->height * 4 * window->width)
+lib/C/CSFML/clear_win.c:    window->pixels[i++] = 255;
+lib/C/CSFML/my_put_sphere.c:** on the t_window->pixels
+lib/C/CSFML/my_put_sphere.c:  i = -size;
+lib/C/CSFML/my_put_sphere.c:      j = -size;
+lib/C/CSFML/my_put_sphere.c:	  dist = sqrt(((pos.x - pos.x + j) * (pos.x - pos.x + j))
+lib/C/CSFML/my_put_sphere.c:		      + ((pos.y - pos.y + i) * (pos.y - pos.y + i)));
+Binary file lib/C/CSFML/libc_graph_prog.so matches
+lib/C/CSFML/get_pixel_color.c:** in (x, y) of t_window->pixels
+lib/C/CSFML/get_pixel_color.c:  r = window->pixels[(window->width * y + x) * 4 + 0];
+lib/C/CSFML/get_pixel_color.c:  g = window->pixels[(window->width * y + x) * 4 + 1];
+lib/C/CSFML/get_pixel_color.c:  b = window->pixels[(window->width * y + x) * 4 + 2];
+lib/C/CSFML/get_pixel_color.c:  a = window->pixels[(window->width * y + x) * 4 + 3];
+lib/C/CSFML/my_put_png.c:** because the image need to be re-loaded whenether the fonction
+lib/C/CSFML/my_put_png.c:  sfRenderWindow_drawSprite(window->window, sprite, NULL);
+lib/C/CSFML/my_put_png.c:  sfRenderWindow_drawSprite(window->window, sprite, NULL);
+lib/C/CSFML/put_text.c:** using t_window, it will get the font of t_window->font
+lib/C/CSFML/put_text.c:  if (window->font != NULL && word != NULL)
+lib/C/CSFML/put_text.c:      font = sfFont_createFromFile(window->font);
+lib/C/CSFML/put_text.c:      sfRenderWindow_drawText(window->window, text, NULL);
+lib/C/CSFML/my_put_pixel.c:** Put a pixel in window->pixels array of sfUint8
+lib/C/CSFML/my_put_pixel.c:** return -1 on error
+lib/C/CSFML/my_put_pixel.c:    return (-1);
+lib/C/CSFML/my_put_pixel.c:  if (x > window->width || y >= window->height)
+lib/C/CSFML/my_put_pixel.c:    return (-1);
+lib/C/CSFML/my_put_pixel.c:  window->pixels[(window->width * y + x) * 4 + 0] = color.r;
+lib/C/CSFML/my_put_pixel.c:  window->pixels[(window->width * y + x) * 4 + 1] = color.g;
+lib/C/CSFML/my_put_pixel.c:  window->pixels[(window->width * y + x) * 4 + 2] = color.b;
+lib/C/CSFML/my_put_pixel.c:  window->pixels[(window->width * y + x) * 4 + 3] = color.a;
+lib/C/CSFML/my_put_pixel.c:  if (from->x > to->x)
+lib/C/CSFML/my_put_pixel.c:  a = (to.y - from.y) / (to.x - from.x);
+lib/C/CSFML/my_put_pixel.c:  b = from.y - (a * from.x);
+lib/C/CSFML/create_sprite.c:  sfSprite_setPosition(sprite->sprite, pos);
+lib/C/CSFML/create_sprite.c:  sfSprite_setScale(sprite->sprite, xy_vectorf(1, 1));
+lib/C/CSFML/create_sprite.c:  sfRenderWindow_drawSprite(window->window, sprite->sprite, NULL);
+lib/C/CSFML/create_sprite.c:  sfSprite_setScale(sprite->sprite, resize);
+lib/C/CSFML/create_sprite.c:  sfSprite_setPosition(sprite->sprite, pos);
+lib/C/CSFML/create_sprite.c:  sfRenderWindow_drawSprite(window->window, sprite->sprite, NULL);
+lib/C/CSFML/create_sprite.c:** getting texture in t_sprite->texture and sprite in t_sprite->sprite
+lib/C/CSFML/create_sprite.c:  if ((sprite->texture = sfTexture_createFromFile(pathname, NULL)) == NULL)
+lib/C/CSFML/create_sprite.c:  if ((sprite->sprite = sfSprite_create()) == NULL)
+lib/C/CSFML/create_sprite.c:      sfTexture_destroy(sprite->texture);
+lib/C/CSFML/create_sprite.c:  sfSprite_setTexture(sprite->sprite, sprite->texture, sfTrue);
+Binary file lib/C/CSFML/libc_graph_prog_full.so matches
+lib/C/CSFML/thread.c:** disabling all kind of non-terminated thread that has been freed
+lib/C/CSFML/mouse_pos.c:    window->mouse = sfMouse_getPositionRenderWindow(window->window);
+lib/C/CSFML/mouse_pos.c:  return (window->mouse);
+lib/C/CSFML/free.c:      sfTexture_destroy(sprites[0]->texture);
+lib/C/CSFML/free.c:	  if (sprites[i]->sprite != NULL)
+lib/C/CSFML/free.c:	    sfSprite_destroy(sprites[i]->sprite);
+lib/C/CSFML/free.c:      if (sprite->sprite != NULL)
+lib/C/CSFML/free.c:	sfSprite_destroy(sprite->sprite);
+lib/C/CSFML/free.c:      if (sprite->texture != NULL)
+lib/C/CSFML/free.c:	sfTexture_destroy(sprite->texture);
+lib/C/CSFML/free.c:      if (window->window != NULL)
+lib/C/CSFML/free.c:	sfRenderWindow_destroy(window->window);
+lib/C/CSFML/free.c:      if (window->pixels != NULL)
+lib/C/CSFML/free.c:	sfree(&window->pixels);
+lib/C/CSFML/free.c:      if (window->font != NULL)
+lib/C/CSFML/free.c:	sfree(&window->font);
+lib/C/CSFML/free.c:      free_musics(window->musics);
+lib/C/CSFML/free.c:      if (window->texture != NULL)
+lib/C/CSFML/free.c:	sfTexture_destroy(window->texture);
+lib/C/CSFML/free.c:      if (window->sprite != NULL)
+lib/C/CSFML/free.c:	sfSprite_destroy(window->sprite);
+lib/C/CSFML/init_csfml.c:  if (bar == -1)
+lib/C/CSFML/init_csfml.c:  window->height = height;
+lib/C/CSFML/init_csfml.c:  window->width = window->height * dim;
+lib/C/CSFML/init_csfml.c:  window->window = create_window(name,
+lib/C/CSFML/init_csfml.c:				 window->width, window->height, bar);
+lib/C/CSFML/init_csfml.c:  window->sprite = sfSprite_create();
+lib/C/CSFML/init_csfml.c:  window->texture = sfTexture_create(window->width, window->height);
+lib/C/CSFML/init_csfml.c:  sfSprite_setTexture(window->sprite, window->texture, sfTrue);
+lib/C/CSFML/init_csfml.c:  if ((window->pixels = pixels_buffer(window->width, window->height)) == NULL)
+lib/C/CSFML/init_csfml.c:  window->font = NULL;
+lib/C/CSFML/init_csfml.c:  window->musics = NULL;
+lib/C/CSFML/in_rect.c:** This function refresh the position of the mouse in t_window->mouse
+lib/C/CSFML/in_rect.c:** of size size.x * size.y who upper-left corner is at (origin.x, origin.y)
+lib/C/CSFML/in_rect.c:  if (window->mouse.x >= origin.x && window->mouse.x <= (origin.x + size.x)
+lib/C/CSFML/in_rect.c:      && window->mouse.y >= origin.y && window->mouse.y <= (origin.y + size.y))
+lib/C/CSFML/quit.c:** in t_window->window, is the user clic on the 'x' o the window
+lib/C/CSFML/quit.c:  if (pos.x >= win->width - 40 && pos.y <= 0 &&
+lib/C/CSFML/quit.c:      && pos.x <= win->width && pos.y >= -40)
+lib/C/CSFML/quit.c:    sfRenderWindow_close(win->window);
+lib/C/CSFML/quit.c:    sfRenderWindow_close(win->window);
+Binary file lib/C/libgetlineshell.a matches
+lib/C/my.h:** Return -1 o error
+lib/C/my.h:** Return -1 on error
+lib/C/my.h:** Returns -1 on error, thins functions handles NULL pointers;
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error (NULL ptr for example)
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Removes all non-ASCII characters
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** Returns -1 on error
+lib/C/my.h:** my_int_len(-42) returns 3, for the '-', the '4' and the '2'
+lib/C/my.h:** Returns -1 on error
+Binary file lib/C/default/my_strcat.o matches
+Binary file lib/C/default/rm_ascii.o matches
+Binary file lib/C/default/file_size.o matches
+lib/C/default/my_strcpy.c:** my_strcpy.c for my_strcpy in /home/lblanchard/lbl-libc/C
+lib/C/default/my_strcpy.c:    return (-1);
+lib/C/default/my_strcpy.c:    n = n - 1;
+lib/C/default/load_file.c:  if ((size = file_size(pathname)) == -1)
+lib/C/default/load_file.c:  if ((fd = open(pathname, O_RDONLY)) == -1)
+lib/C/default/load_file.c:  if ((read(fd, input, size)) == -1)
+lib/C/default/load_file.c:  if (input[my_strlen(input) - 1] != '\n')
+lib/C/default/zeros.c:    return (-1);
+Binary file lib/C/default/my_strlen.o matches
+Binary file lib/C/default/my_alloc_tab.o matches
+Binary file lib/C/default/my_strdup.o matches
+lib/C/default/save_file.c:** save_file.c for save_file in /home/lblanchard/lbl-libc/C
+lib/C/default/save_file.c:  if ((fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND, 0666)) == -1)
+lib/C/default/save_file.c:    return (-1);
+Binary file lib/C/default/convert_endian.o matches
+Binary file lib/C/default/tabdup.o matches
+Binary file lib/C/default/zeros.o matches
+lib/C/default/get_ip.c:** lbl-libc
+lib/C/default/get_ip.c:  if (getifaddrs(&ifaddr) == -1)
+lib/C/default/get_ip.c:    if (cursor->ifa_addr && cursor->ifa_addr->sa_family == AF_INET)
+lib/C/default/get_ip.c:      saddr = (struct sockaddr_in *)cursor->ifa_addr;
+lib/C/default/get_ip.c:      ip = my_strdup(inet_ntoa(saddr->sin_addr));
+lib/C/default/get_ip.c:      if (interface != NULL && my_strcmp(cursor->ifa_name, interface) == 0)
+lib/C/default/get_ip.c:    cursor = cursor->ifa_next;
+Binary file lib/C/default/total_name.o matches
+Binary file lib/C/default/my_total_len.o matches
+lib/C/default/my_strcmp.c:  if (*s1 - *s2 < 0)
+lib/C/default/my_strcmp.c:    return (-1);
+lib/C/default/my_strcmp.c:  if (*s1 - *s2 > 0)
+lib/C/default/my_strcmp.c:  --n;
+lib/C/default/my_strcmp.c:    --n;
+lib/C/default/my_strcmp.c:  return (*s1 - *s2);
+lib/C/default/my_put_nbr.c:      my_putchar('-');
+lib/C/default/my_put_nbr.c:      nb = -nb;
+Binary file lib/C/default/remove_str.o matches
+Binary file lib/C/default/my_strstr.o matches
+Binary file lib/C/default/my_putchar.o matches
+Binary file lib/C/default/dir_filenames.o matches
+Binary file lib/C/default/epur_str.o matches
+Binary file lib/C/default/save_as.o matches
+Binary file lib/C/default/my_getnbr.o matches
+lib/C/default/save_as.c:  if ((fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND, 0666)) == -1)
+lib/C/default/save_as.c:    return (-1);
+lib/C/default/save_as.c:  if (write(fd, data, size) == -1)
+lib/C/default/save_as.c:    return (-1);
+lib/C/default/epur_str.c:  if (s[my_strlen(s) - 1] == ' ')
+lib/C/default/epur_str.c:    s[my_strlen(s) - 1] = 0;
+lib/C/default/epur_str.c:    return (-1);
+Binary file lib/C/default/revstr.o matches
+lib/C/default/remove_str.c:** remove_str.c for remove_char in /home/leandre/lbl-libc/C
+lib/C/default/remove_str.c:    return (-1);
+Binary file lib/C/default/my_intlen.o matches
+Binary file lib/C/default/my_strcmp.o matches
+Binary file lib/C/default/display_inside.o matches
+lib/C/default/my_str_to_wordtab.c:    return (-1);
+lib/C/default/my_str_to_wordtab.c:  tab->i = 0;
+lib/C/default/my_str_to_wordtab.c:  tab->col = 0;
+lib/C/default/my_str_to_wordtab.c:  tab->line = 0;
+lib/C/default/my_str_to_wordtab.c:  tab->str_size = 0;
+lib/C/default/my_str_to_wordtab.c:  if ((tab->tab = my_calloc(sizeof(char **) * count_lines(str, s))) == NULL)
+lib/C/default/my_str_to_wordtab.c:    return (-1);
+lib/C/default/my_str_to_wordtab.c:					 (tab.str_size - tab.i) + 1)) == NULL)
+Binary file lib/C/default/free_tab.o matches
+lib/C/default/dir_filenames.c:    if (dirent->d_type == DT_REG)
+lib/C/default/dir_filenames.c:      if ((filenames = tab_append(filenames, my_strdup(dirent->d_name))) == NULL)
+Binary file lib/C/default/load_file.o matches
+lib/C/default/my_getnbr.c:  if (i > 0 && *(str - 1) == 45)
+lib/C/default/my_getnbr.c:    inv = -1;
+lib/C/default/my_getnbr.c:      var = var + *str - 48;
+Binary file lib/C/default/my_putstr.o matches
+Binary file lib/C/default/tab_append.o matches
+lib/C/default/nb_of.c:** nb_of.c for nb_of in /home/leandre/lbl-libc/nb_of.c
+Binary file lib/C/default/end_with.o matches
+Binary file lib/C/default/my_put_nbr.o matches
+lib/C/default/revstr.c:      *(str + i) = *(str + my_strlen(str) - i - 1);
+lib/C/default/revstr.c:      *(str + my_strlen(str) - i - 1) = c;
+Binary file lib/C/default/revtab.o matches
+Binary file lib/C/default/sfree.o matches
+Binary file lib/C/default/full_read.o matches
+lib/C/default/my_strcat.c:    return (-1);
+lib/C/default/my_strcat.c:    nb = nb - 1;
+Binary file lib/C/default/insert.o matches
+Binary file lib/C/default/replace.o matches
+Binary file lib/C/default/clipboard.o matches
+lib/C/default/file_data.c:  if ((fd = open(pathname, O_RDONLY)) == -1)
+lib/C/default/file_data.c:  if ((read(fd, data, size + 1)) == -1)
+Binary file lib/C/default/save_file.o matches
+Binary file lib/C/default/sort_tab.o matches
+Binary file lib/C/default/nb_of.o matches
+Binary file lib/C/default/file_data.o matches
+Binary file lib/C/default/char_binary.o matches
+Binary file lib/C/default/my_strcpy.o matches
+Binary file lib/C/default/realloc.o matches
+lib/C/default/replace.c:      prev = pos - src;
+lib/C/default/replace.c:      if ((src = insert(src, repl, pos - src)) == NULL)
+Binary file lib/C/default/my_memcpy.o matches
+Binary file lib/C/default/my_str_to_wordtab.o matches
+Binary file lib/C/default/tablen.o matches
+Binary file lib/C/default/shift.o matches
+Binary file lib/C/default/max_len.o matches
+lib/C/default/Makefile:RM	= rm -f
+lib/C/default/Makefile:CFLAGS	= -W -Werror -fPIC -g3 -Wall -Wextra -I ..
+lib/C/default/rm_ascii.c:    return (-1);
+lib/C/default/revtab.c:    return (-1);
+lib/C/default/revtab.c:      tab[i] = tab[len - 1 - i];
+lib/C/default/revtab.c:      tab[len - 1 - i] = temp;
+lib/C/default/file_size.c:  if ((fd = open(pathname, O_RDONLY)) == -1)
+lib/C/default/file_size.c:    return (-1);
+lib/C/default/clipboard.c:  if ((new = catalloc("echo %s | xclip -selection clipboard", str)) == NULL)
+lib/C/default/clipboard.c:    return (-1);
+lib/C/default/clipboard.c:    return (-1);
+Binary file lib/C/default/my_get_float.o matches
+lib/C/default/full_read.c:  if ((read(fd, s, size)) == -1)
+lib/C/default/my_get_float.c:  if (str[0] == '-')
+lib/C/default/my_get_float.c:      nb += (str[i] - 48);
+lib/C/default/my_get_float.c:  if (str[0] == '-')
+lib/C/default/my_get_float.c:    nb *= (-1);
+lib/C/default/my_get_float.c:      nb += (str[i] - 48) / (float)mod;
+Binary file lib/C/default/my_calloc.o matches
+Binary file lib/C/default/put_tab.o matches
+Binary file lib/C/default/get_ip.o matches
+lib/C/get_next_line/get_next_line.c:  while ((*status = read(fd, &all->ch, 1)) > 0)
+lib/C/get_next_line/get_next_line.c:      if (all->ch == '\n')
+lib/C/get_next_line/get_next_line.c:      all->s[all->i] = all->ch;
+lib/C/get_next_line/get_next_line.c:      all->i += 1;
+lib/C/get_next_line/get_next_line.c:      all->size += 1;
+lib/C/get_next_line/get_next_line.c:      if ((all->s = my_frealloc(all->s, all->size)) == NULL)
+lib/C/get_next_line/get_next_line.c:  if (status == -1 || all.s == NULL)
+lib/C/get_next_line/get_next_line.c:      status = -1;
+Binary file lib/C/get_next_line/get_next_line.o matches
+lib/C/get_next_line/Makefile:RM	= rm -f
+lib/C/get_next_line/Makefile:CFLAGS	= -W -Werror -fPIC -g3 -Wall -Wextra -I ..
+Binary file lib/C/libgnl.a matches
+Binary file lib/C/getline_shell/getline_shell_key.o matches
+lib/C/getline_shell/getline_shell_builtin.c:  if (curset->ch == 3)
+lib/C/getline_shell/getline_shell_builtin.c:      zeros(curset->s, my_strlen(curset->s));
+lib/C/getline_shell/getline_shell_builtin.c:      disp_prompt(curset->prompt);
+lib/C/getline_shell/getline_shell_builtin.c:  if (curset->ch != 4)
+lib/C/getline_shell/getline_shell_builtin.c:  if (curset->s[0] == 0)
+lib/C/getline_shell/getline_shell_builtin.c:      sfree(&curset->s);
+lib/C/getline_shell/getline_shell_builtin.c:      curset->s = NULL;
+lib/C/getline_shell/getline_shell_builtin.c:  if (curset->ch != 12)
+lib/C/getline_shell/getline_shell_builtin.c:    return (-1);
+lib/C/getline_shell/getline_shell_builtin.c:  if (prev == 27 && curset->ch == 'l')
+lib/C/getline_shell/getline_shell_builtin.c:      sfree(&curset->s);
+lib/C/getline_shell/getline_shell_builtin.c:      disp_prompt(curset->prompt);
+lib/C/getline_shell/getline_shell_builtin.c:  prev = curset->ch;
+lib/C/getline_shell/getline_shell_builtin.c:  if (curset->ch == 11)
+lib/C/getline_shell/getline_shell_builtin.c:      to_clear = curset->s + curset->cur;
+lib/C/getline_shell/getline_shell_builtin.c:      curset->cur = my_strlen(curset->s);
+Binary file lib/C/getline_shell/getline_shell.o matches
+Binary file lib/C/getline_shell/getline_shell_prompt.o matches
+Binary file lib/C/getline_shell/getline_shell_hist.o matches
+lib/C/getline_shell/getline_shell_hist.c:  len = tablen(curset->cmds);
+lib/C/getline_shell/getline_shell_hist.c:  shift_right(curset->s, 1);
+lib/C/getline_shell/getline_shell_hist.c:  while (curset->hist >= 0 && curset->hist < len
+lib/C/getline_shell/getline_shell_hist.c:	 && my_strcmp(curset->s, curset->cmds[curset->hist]) == 0)
+lib/C/getline_shell/getline_shell_hist.c:    curset->hist += dir;
+lib/C/getline_shell/getline_shell_hist.c:  if (curset->hist < 0)
+lib/C/getline_shell/getline_shell_hist.c:    curset->hist = 0;
+lib/C/getline_shell/getline_shell_hist.c:  if (curset->hist < len && curset->hist >= 0)
+lib/C/getline_shell/getline_shell_hist.c:    sfree(&curset->s);
+lib/C/getline_shell/getline_shell_hist.c:    curset->s = my_strdup(curset->cmds[curset->hist]);
+lib/C/getline_shell/getline_shell_hist.c:  if (curset->hist >= len)
+lib/C/getline_shell/getline_shell_hist.c:    curset->hist = len;
+lib/C/getline_shell/getline_shell_hist.c:    sfree(&curset->s);
+lib/C/getline_shell/getline_shell_hist.c:    curset->s = my_calloc(2);
+lib/C/getline_shell/getline_shell_hist.c:  if (curset->hist == len)
+lib/C/getline_shell/getline_shell_hist.c:    zeros(curset->s, my_strlen(curset->s));
+Binary file lib/C/getline_shell/getline_shell_cursor.o matches
+lib/C/getline_shell/getline_shell_key.c:  if (curset->cmds != NULL && curset->cmds[0] == NULL)
+lib/C/getline_shell/getline_shell_key.c:      zeros(curset->s, my_strlen(curset->s));
+lib/C/getline_shell/getline_shell_key.c:  keys[2] = curset->ch;
+lib/C/getline_shell/getline_shell_key.c:      new_hist(curset, -1);
+lib/C/getline_shell/getline_shell_key.c:      curset->cur = my_strlen(curset->s);
+lib/C/getline_shell/getline_shell_key.c:  if (curset->cmds != NULL && curset->cmds[0] == NULL)
+lib/C/getline_shell/getline_shell_key.c:      zeros(curset->s, my_strlen(curset->s));
+lib/C/getline_shell/getline_shell_key.c:  keys[2] = curset->ch;
+lib/C/getline_shell/getline_shell_key.c:      curset->cur = my_strlen(curset->s);
+lib/C/getline_shell/getline_shell_key.c:  keys[2] = curset->ch;
+lib/C/getline_shell/getline_shell_key.c:      shift_right(curset->s, 1);
+lib/C/getline_shell/getline_shell_key.c:      curset->cur -= 2;
+lib/C/getline_shell/getline_shell_key.c:      if (curset->cur < 0)
+lib/C/getline_shell/getline_shell_key.c:	curset->cur = 0;
+lib/C/getline_shell/getline_shell_key.c:  keys[2] = curset->ch;
+lib/C/getline_shell/getline_shell_key.c:      shift_right(curset->s, 1);
+lib/C/getline_shell/getline_shell.c:  if (ioctl(0, TCGETS, &new) == -1)
+lib/C/getline_shell/getline_shell.c:    return (-1);
+lib/C/getline_shell/getline_shell.c:  if (ioctl(0, TCSETS, &new) == -1)
+lib/C/getline_shell/getline_shell.c:    return (-1);
+lib/C/getline_shell/getline_shell.c:  curset->prompt = prompt;
+lib/C/getline_shell/getline_shell.c:  curset->ch = 0;
+lib/C/getline_shell/getline_shell.c:  curset->cur = 0;
+lib/C/getline_shell/getline_shell.c:  curset->hist = tablen(cmds) - 1;
+lib/C/getline_shell/getline_shell.c:  curset->cmds = cmds;
+lib/C/getline_shell/getline_shell.c:  curset->i = 0;
+lib/C/getline_shell/getline_shell.c:  curset->s = my_calloc(2);
+lib/C/getline_shell/getline_shell.c:  c[2] = curset->ch;
+lib/C/getline_shell/getline_shell.c:  if (curset->cur < 0)
+lib/C/getline_shell/getline_shell.c:    curset->cur = 0;
+lib/C/getline_shell/getline_shell.c:  if (curset->i == NB_PTR && curset->ch != 3 && curset->ch != 4
+lib/C/getline_shell/getline_shell.c:                     && curset->ch != 127 && curset->ch != 12
+lib/C/getline_shell/getline_shell.c:      && curset->ch != 10 && curset->ch != 27 && curset->ch != 11)
+lib/C/getline_shell/getline_shell.c:      if (c[2] != 91 && c[1] != 27 && curset->ch != '\t')
+lib/C/getline_shell/getline_shell.c:	move_and_add(curset->s, curset->cur, curset->ch);
+lib/C/getline_shell/getline_shell.c:      else if (curset->ch != '\t')
+lib/C/getline_shell/getline_shell.c:	curset->s[my_strlen(curset->s)] = curset->ch;
+lib/C/getline_shell/getline_shell.c:      curset->cur++;
+lib/C/getline_shell/getline_shell.c:  if (curset->cur > my_strlen(curset->s))
+lib/C/getline_shell/getline_shell.c:    curset->cur = my_strlen(curset->s);
+Binary file lib/C/getline_shell/getline_shell_builtin.o matches
+lib/C/getline_shell/getline_shell_cursor.c:      i--;
+lib/C/getline_shell/getline_shell_cursor.c:  if (curset->ch != 127)
+lib/C/getline_shell/getline_shell_cursor.c:  if (my_strlen(curset->s) < 1)
+lib/C/getline_shell/getline_shell_cursor.c:  move_and_ret(curset->s, curset->cur);
+lib/C/getline_shell/getline_shell_cursor.c:  curset->cur = curset->cur - 1;
+lib/C/getline_shell/getline_shell_cursor.c:  keys[2] = curset->ch;
+lib/C/getline_shell/getline_shell_cursor.c:      shift_right(curset->s, 1);
+lib/C/getline_shell/getline_shell_cursor.c:      curset->cur = my_strlen(curset->s);
+lib/C/getline_shell/getline_shell_cursor.c:  keys[2] = curset->ch;
+lib/C/getline_shell/getline_shell_cursor.c:      shift_right(curset->s, 1);
+lib/C/getline_shell/getline_shell_cursor.c:      curset->cur = 0;
+lib/C/getline_shell/getline_shell_cursor.c:      i--;
+Binary file lib/C/getline_shell/getline_shell_move.o matches
+lib/C/getline_shell/Makefile:RM	= rm -f
+lib/C/getline_shell/Makefile:CFLAGS	= -W -Werror -fPIC -g3 -Wall -Wextra -I ..
+lib/C/getline_shell/getline_shell_move.c:      s[i] = s[i - 1];
+lib/C/getline_shell/getline_shell_move.c:      i--;
+lib/C/getline_shell/getline_shell_move.c:  i = cur - 1;
+Binary file lib/C/libprintf.a matches
+Binary file lib/C/printf/va_put_tab.o matches
+lib/C/printf/va_put_base.c:** va_put_binary.c for mprintf in /home/lblanchard/lbl-libc/C
+lib/C/printf/va_put_base.c:      bytes = -bytes;
+lib/C/printf/va_put_base.c:      fd_putchar(fd, '-');
+lib/C/printf/va_put_base.c:    nb = -nb;
+lib/C/printf/va_put_base.c:    fd_putchar(fd, '-');
+Binary file lib/C/printf/va_put.o matches
+Binary file lib/C/printf/va_put_base.o matches
+Binary file lib/C/printf/va_fd_len.o matches
+Binary file lib/C/printf/va_cutstr.o matches
+Binary file lib/C/printf/format_gesture.o matches
+Binary file lib/C/printf/fd_put.o matches
+lib/C/printf/new_printf.h:** - %s %d %p %f %c same as printf
+lib/C/printf/new_printf.h:** - %T for a char ** line per line with a \n
+lib/C/printf/new_printf.h:** - %k to add a space every <arg> characters
+lib/C/printf/new_printf.h:** - %D to change the fd
+lib/C/printf/new_printf.h:** - %F to free the given parameter
+lib/C/printf/new_printf.h:** - %S = %s + frees the given string
+Binary file lib/C/printf/printf.o matches
+lib/C/printf/fd_put.c:      fd_putchar(fd, '-');
+lib/C/printf/fd_put.c:      nbr = -nbr;
+lib/C/printf/fd_put.c:      my_putchar('-');
+lib/C/printf/fd_put.c:      nbr = -nbr;
+lib/C/printf/fd_put.c:  nbr = (nbr - integer) * 100000000;
+lib/C/printf/Makefile:RM	= rm -f
+lib/C/printf/Makefile:CFLAGS	= -W -Werror -fPIC -g3 -Wall -Wextra -I ..
+Binary file lib/C/printf/va_printf.o matches
+Binary file lib/C/libdefault.a matches
+lib/C/Makefile:## lbl-libc
+lib/C/Makefile:MAKE	= make -C
+lib/C/Makefile:RM	= rm -f
+lib/C/Makefile:	ar -rcT $(NAME) $(SRCS)
+Binary file lib/C/catalloc/va_catalloc.o matches
+lib/C/catalloc/va_catalloc_nb.c:    src[len + size - i - 1] = 48 + nb % 10;
+lib/C/catalloc/va_catalloc_nb.c:  dec = (int)((nb - ent) * 1000000000);
+lib/C/catalloc/catalloc_handlers.c:  src[my_strlen(src) - 1] = c;
+lib/C/catalloc/va_catalloc.c:  index->action = action;
+lib/C/catalloc/va_catalloc.c:  index->fction = fction;
+Binary file lib/C/catalloc/catalloc.o matches
+lib/C/catalloc/catalloc_gesture.c:    return (-1);
+lib/C/catalloc/catalloc_gesture.c:    if (len_add_str(&str, &cur) == -1)
+Binary file lib/C/catalloc/catalloc_handlers.o matches
+Binary file lib/C/catalloc/va_catalloc_nb.o matches
+Binary file lib/C/catalloc/catalloc_gesture.o matches
+lib/C/catalloc/Makefile:RM	= rm -f
+lib/C/catalloc/Makefile:CFLAGS	= -W -Werror -fPIC -g3 -Wall -Wextra -I ..
+lib/C/defines.h:# define ABS(x) ((x < 0) ? -x : x)

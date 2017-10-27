@@ -19,6 +19,8 @@
 # define IP_FLAG	("-ip")
 # define PORT_FLAG	("-p")
 
+# define PROMPT_CUR	(" > ")
+
 # define MEM_ERROR	("Error : Not enough memory\n")
 
 # define STATUS_OK	(0)
@@ -32,7 +34,6 @@
 
 struct		session_info_s
 {
-  char		*prompt;
   char		*command;
   char		*color;
   char		*username;
@@ -77,6 +78,8 @@ int	start_server(session_info_t *session);
 int	start_server_thread(session_info_t *session);
 int	connect_client(session_info_t *session);
 
+void	prompt(void);
+
 int	receive(session_info_t *session);
 int	receive_welcome(session_info_t *session, header_t *header);
 int	receive_msg(session_info_t *session, header_t *header);
@@ -84,11 +87,12 @@ int	send_msg(session_info_t *session, int action, char *msg);
 int	receive_leave(session_info_t *session, header_t *header);
 int	receive_command(session_info_t *session, header_t *header);
 
+int	accept_command(const char *cmd, session_info_t *session);
 int	user_command(const char *cmd, session_info_t *session);
 int	cmd_quit(const char *cmd, session_info_t *session);
 int	set_color(const char *cmd, session_info_t *session);
-int	set_prompt(const char *cmd, session_info_t *session);
 int	send_command_request(const char *cmd, session_info_t *session);
+int	display_command(const char *cmd, session_info_t *session);
 
 int	encrypt(char *msg, int pktlen);
 int	unencrypt(char *msg, int pktlen);

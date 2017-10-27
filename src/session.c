@@ -51,9 +51,6 @@ static int	set_session(session_info_t *session)
   session->socket = -1;
   session->color = NULL;
   session->port = SERVER_PORT;
-  session->prompt = NULL;
-  if (set_prompt("set prompt   > ", session) == -1)
-    return (-1);
   return (0);
 }
 

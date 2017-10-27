@@ -17,6 +17,7 @@ static int	howto(const char *cmd)
   {
     mprintf("Usage : !set color <color>\n");
     mprintf("\tcyan\n\tred\n\tgreen\n\tyellow\n\tblue\n\twhite\n");
+    prompt();
     return (1);
   }
   return (0);
@@ -24,10 +25,6 @@ static int	howto(const char *cmd)
 
 int		set_color(const char *cmd, session_info_t *session)
 {
-  char		*prompt_cur;
-
-  prompt_cur = session->prompt + my_strlen(session->color);
-  shift_right(prompt_cur, my_strlen(RESET));
   if (howto(cmd))
     return (0);
   cmd += 10;
@@ -45,9 +42,11 @@ int		set_color(const char *cmd, session_info_t *session)
     session->color = BOLDBLUE;
   else if (my_strcmp(cmd, "reset") == 0)
     session->color = NULL;
-  session->prompt = catalloc("%s%s%s%F", session->color, prompt_cur,
-			     RESET, session->prompt);
-  if (session->prompt == NULL)
-    return (-1);
+  else
+  {
+    mdprintf(2, "\"%s\" color is not handled\n", cmd);
+    return (0);
+  }
+  mprintf("Color set to %s\n", cmd);
   return (0);
 }

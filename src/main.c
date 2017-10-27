@@ -21,7 +21,8 @@ static void		info_session(session_info_t *session)
   if (session->side == SERVER)
     mprintf("server\n");
   mprintf("Try to connect on port : %d\n", session->port);
-  session->ip = get_ip(NULL);
+  if (session->side == SERVER)
+    session->ip = get_ip(NULL);
   if (session->ip == NULL)
     mprintf("Error : Are you connected to internet ?\n");
   else
@@ -42,7 +43,7 @@ static int		get_old_conf(struct termios *old)
   return (0);
 }
 
-static void		sigusr_handler(__attribute__ ((unused)) int sig)
+static void		sig_handler(__attribute__ ((unused)) int sig)
 {
 }
 
@@ -58,7 +59,8 @@ int			main(int ac, char **av)
   }
   if (get_old_conf(&old) == -1)
     return (-1);
-  signal(SIGUSR1, sigusr_handler);
+  signal(SIGUSR1, sig_handler);
+  signal(SIGPIPE, sig_handler);
   info_session(&session);
   if (start_communication(&session) == -1)
     mdprintf(2, "Error : Communication error\n");
