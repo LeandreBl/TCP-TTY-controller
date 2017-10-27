@@ -36,7 +36,7 @@ static int		get_old_conf(struct termios *old)
   if (tcgetattr(0, old) == -1)
   {
     mprintf("Error\n");
-    mdprintf(2, "Error : Could not save terminal configs\n");
+    mdprintf(2, "Error : Could not save the terminal configs\n");
     return (-1);
   }
   mprintf("Done\n");
