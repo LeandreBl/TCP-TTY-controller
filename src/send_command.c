@@ -22,47 +22,6 @@ static int	isacmd(const char *cmd)
   return (1);
 }
 
-int		display_command(const char *cmd, session_info_t *session)
-{
-  if (my_strcmp(cmd, "display command"))
-  {
-    mprintf("\rOnly type \"!display command\" to see the last exec request\n");
-    return (-1);
-  }
-  if (session->command == NULL)
-  {
-    mprintf("No command found\n");
-    return (-1);
-  }
-  mprintf("Last remoted command is : %s%s%s\n", BOLDWHITE, session->command, RESET);
-  return (0);
-}
-
-int		accept_command(const char *cmd, session_info_t *session)
-{
-  if (my_strcmp(cmd, "accept"))
-  {
-    mprintf("\rOnly type !accept\n");
-    return (-1);
-  }
-  mprintf("Executing : %s%s%s\n", BOLDWHITE, session->command, RESET);
-  if (my_strncmp(session->command, "ls", 2) == 0 ||
-      my_strncmp(session->command, "grep", 4) == 0)
-  {
-    session->command = catalloc("%S --color=auto", session->command);
-    if (cmd == NULL)
-      return (-1);
-  }
-  if (system(session->command) == -1)
-  {
-    mdprintf(2, "Error : Could not execute %s\n", session->command);
-    sfree(&session->command);
-    return (-1);
-  }
-  sfree(&session->command);
-  return (0);
-}
-
 int		receive_command(session_info_t *session, header_t *header)
 {
   sfree(&session->command);

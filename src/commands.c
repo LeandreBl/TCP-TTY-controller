@@ -25,6 +25,7 @@ static void		init_tab(cmd_ptr_tab_t tab[])
   add_fction("set color", (void *)set_color, &tab[0]);
   add_fction("exec", (void *)send_command_request, &tab[1]);
   add_fction("accept", (void *)accept_command, &tab[2]);
+  add_fction("command", (void *)display_command, &tab[3]);
 }
 
 static int		helper(cmd_ptr_tab_t tab[])

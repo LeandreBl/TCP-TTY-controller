@@ -30,7 +30,7 @@
 # define CON_TIMEOUT	(2)
 
 # define NB_FCTION	(4)
-# define NB_CMDS        (3)
+# define NB_CMDS        (4)
 
 struct		session_info_s
 {

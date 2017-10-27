@@ -33,6 +33,7 @@ SRCS	+= src/change_color.c
 SRCS	+= src/encrypt.c
 SRCS	+= src/send_command.c
 SRCS	+= src/prompt.c
+SRCS	+= src/command_cmd.c
 
 OBJ	= $(SRCS:.c=.o)
 
