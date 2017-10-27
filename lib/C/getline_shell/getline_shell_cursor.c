@@ -10,21 +10,17 @@
 #include "getline_shell.h"
 #include "colors.h"
 
-void                    backspace(void)
+void                    backspace(int size)
 {
   int                   i;
-  int			size;
-  struct winsize	win;
 
-  ioctl(1, TIOCGWINSZ, &win);
-  size = win.ws_col;
   i = 0;
-  while (i < size)
+  while (i < size + 1)
     {
       write(1, " ", 1);
       i++;
     }
-  while (i != 0)
+  while (i > 0)
     {
       write(1, "\b", 1);
       i--;
@@ -81,7 +77,7 @@ void                    print_cur(int cur, char *s, const char *prompt)
   int                   i;
 
   mprintf("\r");
-  backspace();
+  backspace(my_strlen(prompt) + my_strlen(s));
   disp_prompt(prompt);
   mprintf("%s", s);
   i = my_strlen(s);

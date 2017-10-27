@@ -40,7 +40,7 @@ void		print_cur(int cur, char *s, const char *prompt);
 void		move_and_add(char *s, int cur, char ch);
 void		new_hist(t_curset *curset, int dir);
 void		disp_prompt(const char *prompt);
-void		backspace(void);
+void		backspace(int size);
 int		ret_back(t_curset *curset);
 int		left_key(t_curset *curset);
 int		right_key(t_curset *curset);

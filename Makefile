@@ -5,7 +5,7 @@
 ## Login   <leandre.blanchard@epitech.eu>
 ## 
 ## Started on  Thu Dec 15 20:24:11 2016 Léandre Blanchard
-## Last update Fri Oct 27 20:46:37 2017 Léandre Blanchard
+## Last update Sat Oct 28 00:45:26 2017 Léandre Blanchard
 ##
 
 NAME	= remote-tty
@@ -34,8 +34,7 @@ SRCS	+= src/encrypt.c
 SRCS	+= src/send_command.c
 SRCS	+= src/prompt.c
 SRCS	+= src/command_cmd.c
-SRCS	+= src/return_sec.c
-SRCS	+= src/receive_command_return.c
+SRCS	+= src/shell.c
 
 OBJ	= $(SRCS:.c=.o)
 

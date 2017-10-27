@@ -1,0 +1,6 @@
+default/*.o
+printf/*.o
+catalloc/*.o
+get_next_line/*.o
+getline_shell/*.o
+*.a

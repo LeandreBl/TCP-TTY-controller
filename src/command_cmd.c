@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "remote-tty.h"
 
@@ -32,7 +33,6 @@ static int	accept_error(const char *cmd, session_info_t *session)
 int             accept_command(const char *cmd, session_info_t *session)
 {
   int		error;
-  int		fd;
 
   error = accept_error(cmd, session);
   if (error != 1)
@@ -44,17 +44,12 @@ int             accept_command(const char *cmd, session_info_t *session)
     if (cmd == NULL)
       return (-1);
   }
-  fd = init_return_fd();
-  if (fd == -1)
-    return (-1);
   if (system(session->command) == -1)
   {
     mdprintf(2, "Error : Could not execute %s\n", session->command);
     sfree(&session->command);
     return (0);
   }
-  if (send_return_fd(session, fd) == -1)
-    return (-1);
   sfree(&session->command);
   return (0);
 }

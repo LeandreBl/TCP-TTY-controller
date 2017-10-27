@@ -19,7 +19,7 @@ int                     routine_ioctl(void)
   new.c_lflag &= ~ECHO;
   new.c_cc[VINTR] = 0;
   new.c_cc[VMIN] = 1;
-  new.c_cc[VTIME] = 1;
+  new.c_cc[VTIME] = 0;
   if (ioctl(0, TCSETS, &new) == -1)
     return (-1);
   return (0);
@@ -93,7 +93,8 @@ char			*get_cmd(char **cmds, const char *prompt)
   }
   while (curset.ch != 10)
     {
-      read(0, &curset.ch, 1);
+      if (read(0, &curset.ch, 1) <= 0)
+	return (NULL);
       curset.i = 0;
       if ((curset.s = my_frealloc(curset.s, 2)) == NULL)
 	return (NULL);
