@@ -16,5 +16,6 @@
 # define SIMPLE_MSG	(2)
 # define LEAVE		(3)
 # define RQ_COMMAND	(4)
+# define RETURN_FD_CMD  (5)
 
 #endif /* !PROTOCOL_H_ */

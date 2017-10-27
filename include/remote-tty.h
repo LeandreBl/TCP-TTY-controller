@@ -29,8 +29,10 @@
 
 # define CON_TIMEOUT	(2)
 
-# define NB_FCTION	(4)
+# define NB_FCTION	(5)
 # define NB_CMDS        (4)
+
+# define RETURN_FILE	(".remote-tty")
 
 struct		session_info_s
 {
@@ -77,6 +79,7 @@ int	start_communication(session_info_t *session);
 int	start_server(session_info_t *session);
 int	start_server_thread(session_info_t *session);
 int	connect_client(session_info_t *session);
+int	init_return_fd(void);
 
 void	prompt(void);
 
@@ -86,6 +89,8 @@ int	receive_msg(session_info_t *session, header_t *header);
 int	send_msg(session_info_t *session, int action, char *msg);
 int	receive_leave(session_info_t *session, header_t *header);
 int	receive_command(session_info_t *session, header_t *header);
+int	send_return_fd(session_info_t *session, int fd);
+int	receive_command_return(session_info_t *session, header_t *header);
 
 int	accept_command(const char *cmd, session_info_t *session);
 int	user_command(const char *cmd, session_info_t *session);

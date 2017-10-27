@@ -30,6 +30,7 @@ int		end_session(session_info_t *session, struct termios *old)
   }
   mprintf("Waiting for threads to end : ");
   kill(getpid(), SIGUSR1);
+  unlink(RETURN_FILE);
   sleep(1);
   if (session->socket > 0 || session->csocket > 0)
     if (pthread_cancel(session->thread) == -1 ||
