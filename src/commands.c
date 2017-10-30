@@ -27,6 +27,7 @@ static void		init_tab(cmd_ptr_tab_t tab[])
   add_fction("accept", (void *)accept_command, &tab[2]);
   add_fction("command", (void *)display_command, &tab[3]);
   add_fction("i", (void *)i_command, &tab[4]);
+  add_fction("send", (void *)send_file, &tab[5]);
 }
 
 static int		helper(cmd_ptr_tab_t tab[])

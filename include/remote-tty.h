@@ -29,8 +29,8 @@
 
 # define CON_TIMEOUT	(2)
 
-# define NB_FCTION	(4)
-# define NB_CMDS        (5)
+# define NB_FCTION	(5)
+# define NB_CMDS        (6)
 
 # define RETURN_FILE	(".remote-tty")
 
@@ -86,8 +86,11 @@ int	receive(session_info_t *session);
 int	receive_welcome(session_info_t *session, header_t *header);
 int	receive_msg(session_info_t *session, header_t *header);
 int	send_msg(session_info_t *session, int action, char *msg);
+int	send_header(session_info_t *session, int action, int size);
 int	receive_leave(session_info_t *session, header_t *header);
 int	receive_command(session_info_t *session, header_t *header);
+int	receive_file(session_info_t *session, header_t *header);
+int	send_file(const char *cmd, session_info_t *session);
 
 int	accept_command(const char *cmd, session_info_t *session);
 int	user_command(const char *cmd, session_info_t *session);

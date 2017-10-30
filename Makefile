@@ -35,6 +35,7 @@ SRCS	+= src/send_command.c
 SRCS	+= src/prompt.c
 SRCS	+= src/command_cmd.c
 SRCS	+= src/shell.c
+SRCS	+= src/send_file.c
 
 OBJ	= $(SRCS:.c=.o)
 

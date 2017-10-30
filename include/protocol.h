@@ -12,10 +12,13 @@
 
 # define MAGIC_NUMBER	(0x125ad5af)
 
+# define FILE_SIZE_PKT  (65535)
+
 # define WELCOME	(1)
 # define SIMPLE_MSG	(2)
 # define LEAVE		(3)
 # define RQ_COMMAND	(4)
 # define RETURN_FD_CMD  (5)
+# define FILE           (6)
 
 #endif /* !PROTOCOL_H_ */
