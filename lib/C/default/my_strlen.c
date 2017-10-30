@@ -21,3 +21,15 @@ int	my_strlen(const char *str)
     i++;
   return (i);
 }
+
+int	my_kstrlen(const char *str, char k)
+{
+  int	i;
+
+  i = 0;
+  if (str == NULL)
+    return (0);
+  while (str[i] != k && str[i])
+    ++i;
+  return (i);
+}

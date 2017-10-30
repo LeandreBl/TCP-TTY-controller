@@ -12,16 +12,21 @@
 
 #include "my.h"
 
-void	        free_tab(char **tab)
+void	        free_tab(char ***ptr)
 {
   int		i;
+  char		**tab;
 
   i = 0;
+  tab = *ptr;
   if (tab != NULL)
     {
       while (tab[i] != NULL)
-	sfree(&tab[i++]);
-      sfree(&tab);
-      tab = NULL;
+      {
+	sfree(&tab[i]);
+	++i;
+      }
+      sfree(ptr);
+      *ptr = NULL;
     }
 }

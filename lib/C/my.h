@@ -5,7 +5,7 @@
 ** Login   <lblanchard@epitech.net>
 ** 
 ** Started on  Thu Oct 13 09:19:01 2016 Leandre Blanchard
-** Last update Wed Oct 25 21:04:35 2017 Léandre Blanchard
+** Last update Sat Oct 28 22:22:29 2017 Léandre Blanchard
 */
 
 #ifndef MY_H_
@@ -19,6 +19,12 @@ extern "C" {
 }
 #endif
 # include <stddef.h>
+
+/*
+** Isacmd returns 1 if the cmd exist in $PATH
+** return 0 if not or on error
+*/
+int	isacmd(const char *str);
 
 /*
 ** Sets the correct ioctl config for get_cmd command
@@ -231,6 +237,15 @@ int	revtab(char **tab);
 char	**tab_append(char **tab, char *add);
 
 /*
+** This function remove the char * at tab[index] and frees it
+** without letting a blank by moving the other indexes
+** This function does not allocate memory
+** return -1 on Error
+**
+*/
+int	tab_remove(char **tab, int index);
+
+/*
 ** Returns 1 if the end of the [s] string match the
 ** [end] string like end_with("foo.mp3", ".mp3);
 ** Returns 0 if not :)
@@ -314,7 +329,7 @@ int	my_intlen(int);
 ** Free each pointers of the tab, and then free
 ** the tab ptr
 */
-void	free_tab(char **);
+void	free_tab(char ***tabaddr);
 
 /*
 ** Allocate a tab with [lines] lines of [length] size each one
@@ -355,7 +370,8 @@ void	my_put_nbr(int);
 int	my_putstr(const char *);
 
 /* NULL proof strlen, returns 0 if argument is NULL */
-int	my_strlen(const char *);
+int	my_strlen(const char *str);
+int	my_kstrlen(const char *str, char k);
 
 /* man atoi */
 int	my_getnbr(const char *);
@@ -382,7 +398,8 @@ int	my_strcat(char *dest, const char *src);
 char	*my_strncat(char *dest, const char *src, int n);
 
 /* man 3 strdup */
-char	*my_strdup(const char *str);
+char	*my_strdup(const char *src);
+char	*my_strndup(const char *src, int size);
 
 /* Reverse the order of the characters in str */
 char	*revstr(char *str);

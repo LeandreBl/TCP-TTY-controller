@@ -15,7 +15,7 @@
 #include "defines.h"
 #include "colors.h"
 
-static int	isacmd(const char *cmd)
+static int	iscmd(const char *cmd)
 {
   if (my_strlen(cmd) < 6)
     return (0);
@@ -45,7 +45,7 @@ int		receive_command(session_info_t *session, header_t *header)
 
 int		send_command_request(const char *cmd, session_info_t *session)
 {
-  if (!isacmd(cmd))
+  if (!iscmd(cmd))
   {
     mdprintf(2, "\rDoes not seem like a valid command\n");
     prompt();

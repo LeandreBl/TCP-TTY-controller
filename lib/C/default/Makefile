@@ -63,6 +63,7 @@ SRCS	+= tabdup.c
 SRCS	+= tablen.c
 SRCS	+= total_name.c
 SRCS	+= zeros.c
+SRCS	+= isacmd.c
 
 OBJS	= $(SRCS:.c=.o)
 

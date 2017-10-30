@@ -34,19 +34,30 @@ static int      count_lines(const char *str, int separator)
 	++nb;
       ++i;
     }
-  return (nb);
+  return (nb + 1);
 }
 
 static int	init_struct(t_tab *tab, const char *str, int s)
 {
+  int		i;
+  int		size;
+
+  i = 0;
   if (str == NULL)
     return (-1);
   tab->i = 0;
   tab->col = 0;
   tab->line = 0;
   tab->str_size = 0;
-  if ((tab->tab = my_calloc(sizeof(char **) * count_lines(str, s))) == NULL)
+  size = count_lines(str, s);
+  tab->tab = my_calloc(sizeof(char *) * size);
+  if (tab->tab == NULL)
     return (-1);
+  while (i < size)
+  {
+    tab->tab[i] = NULL;
+    ++i;
+  }
   return (0);
 }
 
@@ -66,7 +77,13 @@ char		**my_str_to_wordtab(const char *str, int s)
 	return (NULL);
       tab.col = 0;
       while (str[tab.i] != 0 && str[tab.i] != s)
-	tab.tab[tab.line][tab.col++] = str[tab.i++];
+      {
+	tab.tab[tab.line][tab.col] = str[tab.i];
+	++tab.col;
+	++tab.i;
+      }
+      if (str[tab.i] == 0)
+	return (tab.tab);
       tab.tab[tab.line++][tab.col] = '\0';
       ++tab.i;
     }

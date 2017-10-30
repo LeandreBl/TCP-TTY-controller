@@ -52,6 +52,6 @@ int		start_communication(session_info_t *session)
   }
   sfree(&line);
   send_msg(session, LEAVE, NULL);
-  free_tab(cmds);
+  free_tab(&cmds);
   return (0);
 }
