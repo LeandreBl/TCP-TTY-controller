@@ -5,7 +5,7 @@
 ** Login   <lblanchard@epitech.net>
 ** 
 ** Started on  Tue Oct 11 09:27:45 2016 Leandre Blanchard
-** Last update Wed Oct 25 21:15:41 2017 Léandre Blanchard
+** Last update Mon Oct 30 22:42:38 2017 Léandre Blanchard
 */
 
 #include "my.h"
@@ -15,26 +15,26 @@ int	my_strcat(char *dest, const char *src)
   if (dest == NULL || src == NULL)
     return (-1);
   while (*dest)
-    dest++;
+    ++dest;
   while ((*dest = *src))
     {
-      dest++;
-      src++;
+      ++dest;
+      ++src;
     }
   return (0);
 }
 
-char	*my_strncat(char *dest, const char *src, int nb)
+int	my_strncat(char *dest, const char *src, int nb)
 {
-  int	i;
-
-  i = 0;
-  while (src[i] != '\0' && nb > 0)
+  if (dest == NULL || src == NULL)
+    return (-1);
+  while (*dest)
+    ++dest;
+  while ((*dest = *src) && nb > 0)
   {
-    dest[my_strlen(dest) + i] = src[i];
-    i = i + 1;
-    nb = nb - 1;
+    ++dest;
+    ++src;
+    --nb;
   }
-  dest[my_strlen(dest) + 1] = '\0';
-  return dest;
+  return (0);
 }

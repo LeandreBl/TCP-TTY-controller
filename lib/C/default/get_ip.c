@@ -33,7 +33,6 @@ char			*get_ip(const char *interface)
   struct sockaddr_in	*saddr;
   char			*ip;
 
-  ip = NULL;
   if (getifaddrs(&ifaddr) == -1)
     return (NULL);
   cursor = ifaddr;
@@ -42,14 +41,12 @@ char			*get_ip(const char *interface)
     if (cursor->ifa_addr && cursor->ifa_addr->sa_family == AF_INET)
     {
       saddr = (struct sockaddr_in *)cursor->ifa_addr;
-      sfree(&ip);
       ip = my_strdup(inet_ntoa(saddr->sin_addr));
-      if (ip == NULL)
-	return (NULL);
       if (interface == NULL && is_working_ip(ip))
 	break;
       if (interface != NULL && my_strcmp(cursor->ifa_name, interface) == 0)
 	break;
+      sfree(&ip);
     }
     cursor = cursor->ifa_next;
   }

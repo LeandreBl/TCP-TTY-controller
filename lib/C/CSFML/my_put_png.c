@@ -13,12 +13,12 @@
 /*
 ** Put an the image contained in the "name" file on the screen,
 ** this fonction does not need to be free or create a pointer
-** to a t_sprite, but the call is slower than a put_sprite
+** to a sprite_t, but the call is slower than a pusprite_t
 ** because the image need to be re-loaded whenether the fonction
 ** is called
 ** this fonction does not return
 */
-void            put_png(t_window *window, sfVector2f pos,
+void            put_png(window_t *window, sfVector2f pos,
 			const char *name)
 {
   sfSprite      *sprite;
@@ -35,7 +35,7 @@ void            put_png(t_window *window, sfVector2f pos,
 /*
 ** Does the exact same job as above, but resize the image
 */
-void            put_png_resize(t_window *window, sfVector2f pos,
+void            put_png_resize(window_t *window, sfVector2f pos,
 			       const char *name, sfVector2f resize)
 {
   sfSprite      *sprite;

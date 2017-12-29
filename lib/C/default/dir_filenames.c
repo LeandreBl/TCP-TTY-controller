@@ -5,7 +5,7 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Sat Sep 16 15:39:05 2017 Léandre Blanchard
-** Last update Sat Oct 14 21:56:12 2017 Léandre Blanchard
+** Last update Mon Dec 25 01:57:46 2017 Léandre Blanchard
 */
 
 #include <sys/types.h>
@@ -14,22 +14,27 @@
 #include "my.h"
 #include "defines.h"
 
-char		**dir_filenames(const char *dirname, int sort)
+char		**dir_filenames(const char *dirname, bool sort)
 {
   char		**filenames;
   DIR		*directory;
   struct dirent	*dirent;
 
   filenames = NULL;
-  if ((directory = opendir(dirname)) == NULL)
+  directory = opendir(dirname);
+  if (directory == NULL)
     return (NULL);
   while ((dirent = readdir(directory)) != NULL)
+  {
     if (dirent->d_type == DT_REG)
-      if ((filenames = tab_append(filenames, my_strdup(dirent->d_name))) == NULL)
+    {
+      filenames = tab_append(filenames, my_strdup(dirent->d_name));
+      if (filenames == NULL)
 	return (NULL);
-  if (closedir(directory))
-    mprintf("%DError : directory <%s> not closed\n", 2, dirname);
-  if (sort)
+    }
+  }
+  closedir(directory);
+  if (sort == true)
     sort_tab(filenames);
   return (filenames);
 }

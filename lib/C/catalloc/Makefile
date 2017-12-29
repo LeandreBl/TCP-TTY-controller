@@ -16,6 +16,8 @@ SRCS	+= catalloc_gesture.c
 SRCS	+= catalloc_handlers.c
 SRCS	+= va_catalloc.c
 SRCS	+= va_catalloc_nb.c
+SRCS	+= getlens.c
+SRCS	+= total_alloc.c
 
 OBJS	= $(SRCS:.c=.o)
 

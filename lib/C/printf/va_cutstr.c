@@ -5,7 +5,7 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Fri Sep  8 09:09:31 2017 Léandre Blanchard
-** Last update Thu Oct 12 16:41:33 2017 Leandre Blanchard
+** Last update Sun Nov 12 19:10:06 2017 Léandre Blanchard
 */
 
 #include <unistd.h>
@@ -13,7 +13,7 @@
 #include "new_printf.h"
 #include "my.h"
 
-void			va_cutstr(int fd, va_list *va)
+int			va_cutstr(int fd, va_list *va)
 {
   const char		*str;
   const char		*ptr;
@@ -26,10 +26,12 @@ void			va_cutstr(int fd, va_list *va)
   ptr = str;
   while (ptr + jmp < str + len)
     {
-      write(fd, ptr, jmp);
-      write(fd, " ", 1);
+      if (write(fd, ptr, jmp) == -1 ||
+	  write(fd, " ", 1) == -1)
+	return (-1);
       ptr += jmp;
     }
   if (ptr < str + len)
-    fd_putstr(fd, ptr);
+    return (fd_putstr(fd, ptr));
+  return (0);
 }

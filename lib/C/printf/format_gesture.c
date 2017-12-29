@@ -5,7 +5,7 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Thu Sep  7 14:30:58 2017 Léandre Blanchard
-** Last update Thu Oct 12 16:45:46 2017 Leandre Blanchard
+** Last update Sun Nov 12 19:17:49 2017 Léandre Blanchard
 */
 
 #include <unistd.h>
@@ -19,11 +19,12 @@ static int		loop(int *fd, va_list *va,
   int			i;
 
   i = 0;
-  while (fctions[i].action != 0)
+  while (i < NB_FCT)
     {
       if (fctions[i].action == *(*cur + 1))
 	{
-	  fctions[i].fction(*fd, va);
+	  if (fctions[i].fction(*fd, va) == -1)
+	    return (-1);
 	  *cur += 2;
 	  return (fctions[i].action);
 	}

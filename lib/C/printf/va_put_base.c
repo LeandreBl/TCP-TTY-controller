@@ -5,7 +5,7 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Thu Oct 12 16:49:48 2017 Leandre Blanchard
-** Last update Sat Oct 14 21:31:23 2017 Léandre Blanchard
+** Last update Sun Nov 12 19:14:09 2017 Léandre Blanchard
 */
 
 #include "my.h"
@@ -13,14 +13,15 @@
 
 # define HEXA "0123456789abcdef"
 
-static void	put_binary(int fd, int bytes)
+static int	put_binary(int fd, int bytes)
 {
   if (bytes >> 1 != 0)
-    put_binary(fd, bytes >> 1);
-  fd_putchar(fd, 48 + (1 & bytes));
+    if (put_binary(fd, bytes >> 1) == -1)
+      return (-1);
+  return (fd_putchar(fd, 48 + (1 & bytes)));
 }
 
-void		va_put_binary(int fd, va_list *va)
+int		va_put_binary(int fd, va_list *va)
 {
   int		bytes;
 
@@ -28,13 +29,13 @@ void		va_put_binary(int fd, va_list *va)
   if (bytes < 0)
     {
       bytes = -bytes;
-      fd_putchar(fd, '-');
+      if (fd_putchar(fd, '-') == -1)
+	return (-1);
     }
-  fd_putstr(fd, "0b");
-  put_binary(fd, bytes);
+  return (put_binary(fd, bytes));
 }
 
-static void	put_hex(int fd, int nb)
+static int	put_hex(int fd, int nb)
 {
   int		res;
   int		rest;
@@ -42,11 +43,12 @@ static void	put_hex(int fd, int nb)
   res = nb / 16;
   rest = nb % 16;
   if (res > 0)
-    put_hex(fd, res);
-  fd_putchar(fd, HEXA[rest]);
+    if (put_hex(fd, res) == -1)
+      return (-1);
+  return (fd_putchar(fd, HEXA[rest]));
 }
 
-void		va_put_hex(int fd, va_list *va)
+int		va_put_hex(int fd, va_list *va)
 {
   int		nb;
 
@@ -54,8 +56,8 @@ void		va_put_hex(int fd, va_list *va)
   if (nb < 0)
   {
     nb = -nb;
-    fd_putchar(fd, '-');
+    if (fd_putchar(fd, '-') == -1)
+      return (-1);
   }
-  fd_putstr(fd, "0x");
-  put_hex(fd, nb);
+  return (put_hex(fd, nb));
 }

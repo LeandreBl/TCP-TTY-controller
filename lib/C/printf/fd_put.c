@@ -5,72 +5,56 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Thu Sep  7 14:58:28 2017 Léandre Blanchard
-** Last update Wed Oct 25 21:21:29 2017 Léandre Blanchard
+** Last update Sun Nov 12 19:06:37 2017 Léandre Blanchard
 */
 
 #include <stdlib.h>
 #include <unistd.h>
 
 #include "my.h"
+#include "new_printf.h"
 
-void		fd_putchar(int fd, int c)
+int		fd_putchar(int fd, int c)
 {
-  write(fd, &c, 1);
+  return (write(fd, &c, 1));
 }
 
-void		fd_putstr(int fd, const char *str)
+int		fd_putstr(int fd, const char *str)
 {
   if (str == NULL)
-    write(fd, "NULL", 4);
+    return (write(fd, "NULL", 4));
   else
-    write(fd, str, my_strlen(str));
+    return (write(fd, str, my_strlen(str)));
 }
 
-void		fd_putnbr(int fd, int nbr)
+int		fd_putnbr(int fd, int nbr)
 {
+  if (nbr == 0)
+    return (fd_putchar(fd, '0'));
   if (nbr < 0)
     {
-      fd_putchar(fd, '-');
+      if (fd_putchar(fd, '-') == -1)
+	return (-1);
       nbr = -nbr;
     }
   if (nbr / 10 != 0)
-    fd_putnbr(fd, nbr / 10);
-  fd_putchar(fd, nbr % 10 + 48);
+    if (fd_putnbr(fd, nbr / 10) == -1)
+      return (-1);
+  return (fd_putchar(fd, nbr % 10 + 48));
 }
 
-void			fd_pointer(int fd, void *ptr)
+int			fd_pointer(int fd, void *ptr)
 {
-  char			*base;
-  char			*result;
-  unsigned long long    i;
-  unsigned long long    j;
-  unsigned long long    addr;
-
-  addr = (long)ptr;
-  j = 0;
-  i = addr;
-  if ((result = my_calloc(sizeof (char) * 100)) == NULL)
-    return;
-  if ((base = my_strdup("0123456789abcedf")) == NULL)
-    {
-      sfree(&result);
-      return;
-    }
-  while (i != 0)
-    {
-      result[j] = base[i % 16];
-      i = i / 16;
-      j = j + 1;
-    }
-  fd_putstr(fd, revstr(result));
-  sfree(&result);
-  sfree(&base);
+  fd_putstr(fd, "0x");
+  fd_put_unsigned_int(fd, (long)ptr);
+  return (0);
 }
 
-void			fd_putfloat(int fd, double nbr)
+int			fd_putfloat(int fd, double nbr)
 {
   unsigned long long	integer;
   unsigned long long	floating;
+  int			retur;
 
   if (nbr < 0)
     {
@@ -82,7 +66,8 @@ void			fd_putfloat(int fd, double nbr)
   floating = (unsigned long long)nbr;
   while (floating % 10 == 0 && floating != 0)
     floating /= 10;
-  fd_putnbr(fd, integer);
-  fd_putchar(fd, '.');
-  fd_putnbr(fd, floating);
+  retur = fd_putnbr(fd, integer);
+  retur += fd_putchar(fd, '.');
+  retur += fd_putnbr(fd, floating);
+  return (retur);
 }

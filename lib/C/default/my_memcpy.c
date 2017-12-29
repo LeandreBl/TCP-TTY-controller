@@ -10,7 +10,7 @@
 
 #include <stdlib.h>
 
-int		memcopy(const void *from, void *to, int size)
+int		memcopy(void *to, const void *from, int size)
 {
   int		i;
 

@@ -18,12 +18,14 @@ static void			sadd_int(char *src, int nb)
   i = 0;
   size = my_intlen(nb);
   len = my_strlen(src);
+  if (nb == 0)
+    src[len] = '0';
   if (nb < 0)
   {
     src[len] = '-';
     nb = -nb;
   }
-  while (nb != 0)
+  while (nb > 0)
   {
     src[len + size - i - 1] = 48 + nb % 10;
     nb /= 10;
@@ -36,10 +38,12 @@ char				*add_number(char *src, va_list *va)
   int				nb;
 
   nb = va_arg(*va, int);
-  src = my_frealloc(src, my_intlen(nb) + 1);
   if (src == NULL)
     return (NULL);
-  sadd_int(src, nb);
+  if (nb == 0)
+    my_strcat(src, "0");
+  else
+    sadd_int(src, nb);
   return (src);
 }
 
@@ -54,7 +58,6 @@ char				*add_float(char *src, va_list *va)
   dec = (int)((nb - ent) * 1000000000);
   while (dec % 10 == 0 && dec != 0)
     dec /= 10;
-  src = my_frealloc(src, my_intlen(ent) + my_intlen(dec) + 2);
   if (src == NULL)
     return (NULL);
   sadd_int(src, ent);

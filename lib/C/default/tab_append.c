@@ -12,12 +12,14 @@
 
 #include "my.h"
 
-int		tab_remove(char **tab, int index)
+int		tab_remove(void *ptr, int index)
 {
   int		i;
+  char		**tab;
   char		*store;
 
-  if (tab == NULL || index < 0 || index > tablen(tab))
+  tab = ptr;
+  if (tab == NULL || index < 0 || index > (int)tablen(tab))
     return (-1);
   store = tab[index];
   i = index;
@@ -30,12 +32,14 @@ int		tab_remove(char **tab, int index)
   return (0);
 }
 
-char		**tab_append(char **tab, char *add)
+void		*tab_append(void *ptr, void *add)
 {
+  char		**tab;
   char		**new;
   int		i;
 
   i = 0;
+  tab = ptr;
   if ((new = malloc(sizeof(char *) * (tablen(tab) + 2))) == NULL)
     return (NULL);
   while (tab != NULL && tab[i] != NULL)

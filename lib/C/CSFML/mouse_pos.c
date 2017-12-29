@@ -11,11 +11,11 @@
 #include "csfml.h"
 
 /*
-** Refresh the position of the mouse in t_window ptr,
+** Refresh the position of the mouse in window_t ptr,
 ** return the mouse position
 ** just return the position if window is NULL
 */
-sfVector2i     	pos_mouse(t_window *window)
+sfVector2i     	pos_mouse(window_t *window)
 {
   if (window != NULL)
     window->mouse = sfMouse_getPositionRenderWindow(window->window);

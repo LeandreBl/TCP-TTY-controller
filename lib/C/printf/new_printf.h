@@ -5,7 +5,7 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Tue Sep  5 13:11:44 2017 Léandre Blanchard
-** Last update Thu Oct 12 16:55:14 2017 Leandre Blanchard
+** Last update Sun Nov 12 19:11:58 2017 Léandre Blanchard
 */
 
 #ifndef NEW_PRINTF_H_
@@ -13,7 +13,7 @@
 
 # include <stdarg.h>
 
-# define NB_FCT 11
+# define NB_FCT 12
 
 /*
 **   Handled flags :
@@ -29,7 +29,7 @@
 typedef struct		s_fctptr
 {
   char			action;
-  void			*(* fction)(int fd, va_list *va);
+  int			(* fction)(int fd, va_list *va);
 }			t_fctptr;
 
 /* 
@@ -49,47 +49,48 @@ int			new_printf(const char *format, ...);
 int			va_printf(int fd, const char *format, va_list *va);
 
 /* Write a character in the given fd */
-void			fd_putchar(int fd, int c);
+int			fd_putchar(int fd, int c);
 
 /* Write a '\0' terminated string in the given fd */
-void			fd_putstr(int fd, const char *str);
+int			fd_putstr(int fd, const char *str);
 
 /* Write the given nb in ASCII in the given fd */
-void			fd_putnbr(int fd, int nb);
+int			fd_putnbr(int fd, int nb);
+int			fd_put_unsigned_int(int fd, unsigned int nb);
 
 /*
 ** Write the hexadecimal value of the given pointer
 ** in the given fd
 */
-void			fd_pointer(int fd, void *ptr);
+int			fd_pointer(int fd, void *ptr);
 
 /*
 ** Write the ASCII representation of the given
 ** double / float in the given fd
 */
-void			fd_putfloat(int fd, double nb);
+int			fd_putfloat(int fd, double nb);
 
-void			va_putchar(int fd, va_list *va);
+int			va_putchar(int fd, va_list *va);
 
-void			va_cutstr(int fd, va_list *va);
+int			va_cutstr(int fd, va_list *va);
 
-void			va_free(int fd, va_list *va);
+int			va_putstr(int fd, va_list *va);
 
-void			va_putstr(int fd, va_list *va);
+int			va_putnbr(int fd, va_list *va);
 
-void			va_putnbr(int fd, va_list *va);
+int			va_put_unsigned_int(int fd, va_list *va);
 
-void			va_pointer(int fd, va_list *va);
+int			va_pointer(int fd, va_list *va);
 
-void			va_putfloat(int fd, va_list *va);
+int			va_putfloat(int fd, va_list *va);
 
-void			va_fputstr(int fd, va_list *va);
+int			va_fputstr(int fd, va_list *va);
 
-void			va_put_tab(int fd, va_list *va);
+int			va_put_tab(int fd, va_list *va);
 
-void			va_put_binary(int fd, va_list *va);
+int			va_put_binary(int fd, va_list *va);
 
-void			va_put_hex(int fd, va_list *va);
+int			va_put_hex(int fd, va_list *va);
 
 /*
 ** Apply the given %'' in format to the given argument
@@ -99,7 +100,7 @@ void			format_gesture(int fd, va_list *va,
 				       t_fctptr *fctions, const char *format);
 
 /* %F function */
-void			va_free(int fd, va_list *va);
+int			va_free(int fd, va_list *va);
 
 /*
 ** new_printf does not print each character one per one, but

@@ -10,11 +10,13 @@
 
 #include "my.h"
 
-int		tablen(char **tab)
+size_t		tablen(void *ptr)
 {
-  int		i;
+  size_t		i;
+  char		**tab;
 
   i = 0;
+  tab = ptr;
   if (tab == NULL)
     return (0);
   while (tab[i] != NULL)

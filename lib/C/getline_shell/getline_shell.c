@@ -68,11 +68,11 @@ static int		add_char(t_curset *curset)
       if (c[2] != 91 && c[1] != 27 && curset->ch != '\t')
 	move_and_add(curset->s, curset->cur, curset->ch);
       else if (curset->ch != '\t')
-	curset->s[my_strlen(curset->s)] = curset->ch;
+	curset->s[(int)my_strlen(curset->s)] = curset->ch;
       curset->cur++;
     }
-  if (curset->cur > my_strlen(curset->s))
-    curset->cur = my_strlen(curset->s);
+  if (curset->cur > (int)my_strlen(curset->s))
+    curset->cur = (int)my_strlen(curset->s);
   return (0);
 }
 

@@ -15,10 +15,7 @@ char				*add_char(char *src, va_list *va)
   char				c;
 
   c = (char)va_arg(*va, int);
-  src = insert(src, "x", my_strlen(src));
-  if (src == NULL)
-    return (NULL);
-  src[my_strlen(src) - 1] = c;
+  my_strncat(src, &c, 1);
   return (src);
 }
 
@@ -36,9 +33,8 @@ char				*add_str(char *src, va_list *va)
   char				*str;
 
   str = va_arg(*va, char *);
-  if (str == NULL)
-    return (src);
-  return (insert(src, str, my_strlen(src)));
+  my_strcat(src, str);
+  return (src);
 }
 
 char				*add_str_free(char *src, va_list *va)
@@ -46,7 +42,7 @@ char				*add_str_free(char *src, va_list *va)
   char				*str;
 
   str = va_arg(*va, char *);
-  src = insert(src, str, my_strlen(src));
+  my_strcat(src, str);
   sfree(&str);
   return (src);
 }

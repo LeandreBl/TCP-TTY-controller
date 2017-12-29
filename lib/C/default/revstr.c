@@ -14,15 +14,17 @@ char	*revstr(char *str)
 {
   int	i;
   char	c;
+  int	len;
 
   i = 0;
   if (str == NULL)
     return (NULL);
-  while (i < my_strlen(str) / 2)
+  len = my_strlen(str);
+  while (i < len / 2)
     {
       c = *(str + i);
-      *(str + i) = *(str + my_strlen(str) - i - 1);
-      *(str + my_strlen(str) - i - 1) = c;
+      *(str + i) = *(str + len - i - 1);
+      *(str + len - i - 1) = c;
       i = i + 1;
     }
   return (str);

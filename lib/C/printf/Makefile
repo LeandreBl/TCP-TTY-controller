@@ -12,6 +12,7 @@ CC	= gcc
 ARCH	= ar rc
 
 SRCS	= fd_put.c
+SRCS	+= fd_put_unsigned.c
 SRCS	+= format_gesture.c
 SRCS	+= printf.c
 SRCS	+= va_cutstr.c
@@ -20,6 +21,7 @@ SRCS	+= va_printf.c
 SRCS	+= va_put_base.c
 SRCS	+= va_put.c
 SRCS	+= va_put_tab.c
+SRCS	+= va_put_unsigned.c
 
 OBJS	= $(SRCS:.c=.o)
 

@@ -10,9 +10,9 @@
 
 #include <stdlib.h>
 
-int	my_strlen(const char *str)
+size_t		my_strlen(const char *str)
 {
-  int	i;
+  size_t	i;
 
   i = 0;
   if (str == NULL)
@@ -22,9 +22,9 @@ int	my_strlen(const char *str)
   return (i);
 }
 
-int	my_kstrlen(const char *str, char k)
+size_t		my_kstrlen(const char *str, char k)
 {
-  int	i;
+  size_t	i;
 
   i = 0;
   if (str == NULL)

@@ -5,11 +5,10 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Wed Apr  5 14:48:58 2017 Léandre Blanchard
-** Last update Sat Oct 14 21:43:57 2017 Léandre Blanchard
+** Last update Mon Nov 13 21:53:54 2017 Léandre Blanchard
 */
 
 #include "csfml.h"
-#include "../my.h"
 
 /*
 ** When you are loading 5 sprites but with 1 image, such as
@@ -19,7 +18,7 @@
 ** only frees the texture, and then all the sprites
 ** replace the freed pointers by NULL
 */
-void		free_sprites_only(t_sprite **sprites)
+void		free_sprites_only(sprite_t **sprites)
 {
   int		i;
 
@@ -37,10 +36,10 @@ void		free_sprites_only(t_sprite **sprites)
     }
 }
 /*
-** Entirely free a t_sprite ** using a call to free_sprite
+** Entirely free a sprite_t ** using a call to free_sprite
 ** and replace the ptr freed, by NULL
 */
-void		free_sprites(t_sprite **sprites)
+void		free_sprites(sprite_t **sprites)
 {
   int		i;
 
@@ -75,9 +74,9 @@ void		free_musics(sfMusic **musics)
     }
 }
 /*
-** Free a single t_sprite, then replace it by NULL
+** Free a single sprite_t, then replace it by NULL
 */
-void            free_sprite(t_sprite *sprite)
+void            free_sprite(sprite_t *sprite)
 {
   if (sprite != NULL)
     {
@@ -85,28 +84,29 @@ void            free_sprite(t_sprite *sprite)
 	sfSprite_destroy(sprite->sprite);
       if (sprite->texture != NULL)
 	sfTexture_destroy(sprite->texture);
+      sfree(&sprite->name);
       sfree(&sprite);
     }
 }
 /*
 ** Using a lot of calls to above fonctions,
-** frees the whole t_window structure
+** frees the whole window_t structure
 */
-void            free_window(t_window *window)
+void            free_window(window_t *window)
 {
   if (window != NULL)
     {
       if (window->window != NULL)
 	sfRenderWindow_destroy(window->window);
-      if (window->pixels != NULL)
-	sfree(&window->pixels);
-      if (window->font != NULL)
-	sfree(&window->font);
+      sfree(&window->pixels);
+      sfree(&window->font);
       free_musics(window->musics);
-      if (window->texture != NULL)
-	sfTexture_destroy(window->texture);
-      if (window->sprite != NULL)
-	sfSprite_destroy(window->sprite);
+      if (window->frame != NULL)
+      {
+	sfTexture_destroy(window->frame->texture);
+	sfSprite_destroy(window->frame->sprite);
+      }
+      sfree(&window->frame);
       sfree(&window);
     }
 }

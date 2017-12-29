@@ -11,14 +11,14 @@
 #include "csfml.h"
 
 /*
-** Draw a square on t_window "window" at coordinates "pos"
+** Draw a square on window_t "window" at coordinates "pos"
 ** with color "color", with size "size"
 ** where "size" is the height/width size,
 ** if size == 2, it will draw 4 pixels of "color" color
 ** This function does not return
 */
 void            put_square(sfVector2i pos, sfColor color,
-			   t_window *window, int size)
+			   window_t *window, int size)
 {
   int           i;
   int           j;

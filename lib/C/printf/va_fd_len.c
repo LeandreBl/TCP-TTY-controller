@@ -5,7 +5,7 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Fri Sep  8 09:00:30 2017 Léandre Blanchard
-** Last update Thu Oct 12 17:20:25 2017 Leandre Blanchard
+** Last update Sun Nov 12 19:12:10 2017 Léandre Blanchard
 */
 
 #include <stdlib.h>
@@ -14,13 +14,14 @@
 #include "new_printf.h"
 #include "my.h"
 
-void			va_free(int fd, va_list *va)
+int			va_free(int fd, va_list *va)
 {
   void			*ptr;
 
   (void)fd;
   ptr = va_arg(*va, void *);
   sfree(&ptr);
+  return (0);
 }
 
 static int		lenframe(const char *str)

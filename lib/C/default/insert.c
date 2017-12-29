@@ -27,10 +27,12 @@ static char	*too_far(char *src, const char *str, int pos)
 char		*insert(char *src, const char *str, int pos)
 {
   char		*dest;
+  int		len;
 
   if (str == NULL || src == NULL)
     return (src);
-  if (pos > my_strlen(src))
+  len = my_strlen(src);
+  if (pos > len)
     return (too_far(src, str, pos));
   if ((dest = my_calloc(my_strlen(src) + my_strlen(str) + 2)) == NULL)
     return (NULL);

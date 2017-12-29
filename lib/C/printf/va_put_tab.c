@@ -5,13 +5,13 @@
 ** Login   <leandre.blanchard@epitech.eu>
 ** 
 ** Started on  Fri Sep  8 09:33:16 2017 Léandre Blanchard
-** Last update Fri Sep  8 09:34:51 2017 Léandre Blanchard
+** Last update Sun Nov 12 19:15:49 2017 Léandre Blanchard
 */
 
 #include "new_printf.h"
 #include "my.h"
 
-void		va_put_tab(int fd, va_list *va)
+int		va_put_tab(int fd, va_list *va)
 {
   int		i;
   char		**tab;
@@ -19,11 +19,14 @@ void		va_put_tab(int fd, va_list *va)
   tab = va_arg(*va, char **);
   i = 0;
   if (tab == NULL)
-    return;
+    return (0);
   while (tab[i] != NULL)
     {
-      fd_putstr(fd, tab[i]);
-      fd_putchar(fd, '\n');
+      if (fd_putstr(fd, tab[i]) == -1)
+	return (-1);
+      if (fd_putchar(fd, '\n') == -1)
+	return (-1);
       ++i;
     }
+  return (0);
 }

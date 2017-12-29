@@ -12,10 +12,10 @@
 
 /*
 ** Draw a sphere of size "size" at position "pos" with color "color"
-** on the t_window->pixels
+** on the window_t->pixels
 ** this fonction does not return
 */
-void                    draw_circle(t_window* window, sfVector2f pos,
+void                    draw_circle(window_t* window, sfVector2f pos,
 				    int size, sfColor color)
 {
   int                   i;

@@ -5,7 +5,7 @@
 ** Login   <lblanchard@epitech.net>
 ** 
 ** Started on  Thu Oct 13 09:19:01 2016 Leandre Blanchard
-** Last update Sat Oct 28 22:22:29 2017 Léandre Blanchard
+** Last update Mon Dec 25 02:04:47 2017 Léandre Blanchard
 */
 
 #ifndef MY_H_
@@ -19,10 +19,37 @@ extern "C" {
 }
 #endif
 # include <stddef.h>
+# include <stdbool.h>
+# include <stdint.h>
+
+/*
+** Return a server socket on port <port>
+** Returns -1 on error
+*/
+int	create_server(uint16_t port);
+
+/*
+** Return a socket when a new client is connected, <sockfd> is the server fd
+** <backlog> argument defines the length of the kernel pending queue
+** Returns -1 on error
+*/
+int	accept_client(int sockfd, int backlog);
+
+/*
+** Try to connect to the server <ip> on <port> and return a client socket
+** Return -1 on error
+*/
+int	connect_to(const char *ip, uint16_t port);
+
+/* swap the inside of both values swap(&i, &j) */
+void	swap(void *a, void *b);
+
+/* man 3 memset */
+void	my_memset(void *ptr, int value, size_t size);
 
 /*
 ** Isacmd returns 1 if the cmd exist in $PATH
-** return 0 if not or on error
+** return 0 otherwise
 */
 int	isacmd(const char *str);
 
@@ -130,14 +157,14 @@ char	*catalloc(const char *format, ...);
 ** Sort the given [tab] in ascending order using strcmp
 ** Returns 0
 */
-int	sort_tab(char **tab);
+int	sort_tab(char **tabptr);
 
 /* 
 ** Load all filenames that are into the [dirname] directory
 ** into an allocated NULL terminated tab
 ** Returns NULL on error
 */
-char	**dir_filenames(const char *dirname, int sort);
+char	**dir_filenames(const char *dirname, bool sort);
 
 /*
 ** Allocate strlen(str) + size bytes,
@@ -162,7 +189,7 @@ char	*insert(char *src, const char *str, int pos);
 ** the same buffer that you are retrieving them from
 ** Returns -1 on error
 */
-int	memcopy(const void *from, void *to, int size);
+int	memcopy(void *to, const void *from, int size);
 
 /*
 ** Uses Xclip and system call to add the given [str] ptr into your clipboard
@@ -178,11 +205,13 @@ int	add_to_clipboard(const char *str);
 */
 int	nb_of(const char *s, char cmp);
 
-/* We'll not talk about this */
+/* my malloc and my free, using only sbrk */
 void	*my_malloc(size_t size);
-
-/* Like really not at all */
-void	free_my(void);
+int	my_free(void *ptr);
+/* free all my_malloc allocated pointers */
+int	my_frees(void);
+/* my_stack gives you the opportunity to see what's inside your my_malloc stack */
+void	my_stack(void);
 
 /* 
 ** Displays the inside of the pointed [buf] memory first [size] bytes
@@ -193,16 +222,16 @@ void	free_my(void);
 ** The display format is [<byte1>][<byte2>][<byte3>] ...
 ** Returns -1 on error
 */
-int	display_inside(const void *buf, const char *format, int size);
+int	display_inside(const void *buf, const char *format, size_t size);
 
 /* Returns the largest strlen(tab[i]) found into the NULL terminated tab */
-int	max_len(char **tab);
+int	max_len(char **tabptr);
 
 /* 
 ** Same as strdup but for a tab, it is NULL terminated
 ** Returns NULL on error
 */
-char	**tabdup(char **tab);
+char	**tabdup(char **tabptr);
 
 /*
 ** Returns an allocated tab containing the [pathname] file
@@ -223,7 +252,7 @@ int	file_size(const char *pathname);
 ** tab[0] became tab[LAST] ...
 ** Returns -1 on error
 */
-int	revtab(char **tab);
+int	revtab(char **tabptr);
 
 /*
 ** Frees the given tab ptr and store the previous values inside a new
@@ -234,7 +263,7 @@ int	revtab(char **tab);
 ** The tab is NULL terminated
 ** Returns NULL on error
 */
-char	**tab_append(char **tab, char *add);
+void	*tab_append(void *tabptr, void *add);
 
 /*
 ** This function remove the char * at tab[index] and frees it
@@ -243,21 +272,21 @@ char	**tab_append(char **tab, char *add);
 ** return -1 on Error
 **
 */
-int	tab_remove(char **tab, int index);
+int	tab_remove(void *tabptr, int index);
 
 /*
 ** Returns 1 if the end of the [s] string match the
 ** [end] string like end_with("foo.mp3", ".mp3);
 ** Returns 0 if not :)
 */
-int	end_with(const char *s, const char *end);
+bool	end_with(const char *s, const char *end);
 
 /*
 ** Kinda same as my_realloc but with a tab, so you can add
 ** more space to store more pointers,
 ** Return NULL on error
 */
-char	**tab_realloc(char **tab, int add);
+char	**tab_realloc(char **tabptr, int add);
 
 /*
 ** Same as file_data but with a fd
@@ -329,15 +358,15 @@ int	my_intlen(int);
 ** Free each pointers of the tab, and then free
 ** the tab ptr
 */
-void	free_tab(char ***tabaddr);
+void	free_tab(void *tabaddr);
 
 /*
-** Allocate a tab with [lines] lines of [length] size each one
+** Allocate a tab with [nlines] lines of [nlength] size each one
 ** They are all allocated and each byte is set to 0
 ** The tab is NULL terminated
 ** Returns NULL on error
 */
-char	**my_alloc_tab(int lines, int length);
+char	**my_alloc_tab(int nlines, int nlength);
 
 /*
 ** man 3 atof
@@ -361,7 +390,7 @@ int	total_name(const char *);
 /*
 ** Man 3 bzero
 */
-int	zeros(char *, int);
+int	zeros(void *ptr, size_t size);
 
 void	my_putchar(char);
 
@@ -370,8 +399,8 @@ void	my_put_nbr(int);
 int	my_putstr(const char *);
 
 /* NULL proof strlen, returns 0 if argument is NULL */
-int	my_strlen(const char *str);
-int	my_kstrlen(const char *str, char k);
+size_t	my_strlen(const char *str);
+size_t	my_kstrlen(const char *str, char k);
 
 /* man atoi */
 int	my_getnbr(const char *);
@@ -395,7 +424,7 @@ int	my_strncmp(const char *, const char *, int);
 int	my_strcat(char *dest, const char *src);
 
 /* NULL proof strncat */
-char	*my_strncat(char *dest, const char *src, int n);
+int	my_strncat(char *dest, const char *src, int n);
 
 /* man 3 strdup */
 char	*my_strdup(const char *src);
@@ -405,14 +434,14 @@ char	*my_strndup(const char *src, int size);
 char	*revstr(char *str);
 
 /* Returns the size of a NULL terminated tab */
-int	tablen(char **tab);
+size_t	tablen(void *tabptr);
 
 /* Put a tab using \n for each lines */
-void	put_tab(char **tab);
+void	put_tab(char **tabptr);
 
 /* Puts each line of tab till NULL preceded by <start> and followed by <end> */
 void	put_tabw(const char *start,
-		      char **tab,
+		      char **tabptr,
 		      const char *end);
 
 #ifdef __cplusplus

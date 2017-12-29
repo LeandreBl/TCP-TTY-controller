@@ -13,10 +13,10 @@
 /*
 ** this fonction need to be added in a display loop
 ** this fonction does not return, but close the window
-** in t_window->window, is the user clic on the 'x' o the window
+** in window_t->window, is the user clic on the 'x' o the window
 ** or press Escape (echap in french)
 */
-void		close_win(t_window *win)
+void		close_win(window_t *win)
 {
   sfVector2i    pos;
 
